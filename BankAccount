@@ -1,0 +1,7 @@
+data class BankAccount(
+    val bankName: String,
+    val accountNumber: String,
+    val isPrimary: Boolean,
+    var isSelected: Boolean = false,
+    val isUPIPinSet: Boolean = false
+)
