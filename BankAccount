@@ -1,29 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+public class AccountBottomSheet extends BottomSheetDialogFragment {
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Bank Account"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+    private RecyclerView recyclerAccounts;
+    private AccountAdapter adapter;
+    private List<Account> accountList;
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerAccounts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp" />
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_account_bottom_sheet, container, false);
+        recyclerAccounts = view.findViewById(R.id.recyclerAccounts);
+        Button btnAddAccount = view.findViewById(R.id.btnAddAccount);
 
-    <Button
-        android:id="@+id/btnAddAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Accounts"
-        android:layout_marginTop="20dp" />
-</LinearLayout>
+        initAccountList();
+        adapter = new AccountAdapter(accountList);
+        recyclerAccounts.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerAccounts.setAdapter(adapter);
+
+        btnAddAccount.setOnClickListener(v -> dismiss());
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dismiss();
+                return true;
+            }
+            return false;
+        });
+
+        return view;
+    }
+
+    private void initAccountList() {
+        accountList = new ArrayList<>();
+        accountList.add(new Account("SBI (Primary account)", "1265", true, false));
+        accountList.add(new Account("State Bank of India", "5674", false, true));
+        accountList.add(new Account("State Bank of india", "6786", false, false));
+    }
+}
