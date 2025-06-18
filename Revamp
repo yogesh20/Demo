@@ -1,47 +1,17 @@
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
+public class BankModel {
+    private String name;
+    private int iconResId;
 
-public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder> {
-
-    private List<BankModel> bankList;
-
-    public BankAdapter(List<BankModel> bankList) {
-        this.bankList = bankList;
+    public BankModel(String name, int iconResId) {
+        this.name = name;
+        this.iconResId = iconResId;
     }
 
-    @NonNull
-    @Override
-    public BankViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bank, parent, false);
-        return new BankViewHolder(view);
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull BankViewHolder holder, int position) {
-        BankModel bank = bankList.get(position);
-        holder.tvBankName.setText(bank.getName());
-        holder.imgBankIcon.setImageResource(bank.getIconResId());
-    }
-
-    @Override
-    public int getItemCount() {
-        return bankList.size();
-    }
-
-    static class BankViewHolder extends RecyclerView.ViewHolder {
-        TextView tvBankName;
-        ImageView imgBankIcon;
-
-        public BankViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvBankName = itemView.findViewById(R.id.tvBankName);
-            imgBankIcon = itemView.findViewById(R.id.imgBankIcon);
-        }
+    public int getIconResId() {
+        return iconResId;
     }
 }
