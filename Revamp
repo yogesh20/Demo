@@ -1,17 +1,32 @@
-public class BankModel {
-    private String name;
-    private int iconResId;
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
-    public BankModel(String name, int iconResId) {
-        this.name = name;
-        this.iconResId = iconResId;
-    }
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Link your Bank now"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
-    public String getName() {
-        return name;
-    }
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabTextColor="@android:color/darker_gray"
+        app:tabSelectedTextColor="@android:color/black"
+        app:tabIndicatorColor="@android:color/black">
+        <com.google.android.material.tabs.TabItem android:text="Bank Details"/>
+        <com.google.android.material.tabs.TabItem android:text="Rupay Credit Card"/>
+    </com.google.android.material.tabs.TabLayout>
 
-    public int getIconResId() {
-        return iconResId;
-    }
-}
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewBanks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>
