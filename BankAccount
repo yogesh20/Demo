@@ -1,53 +1,29 @@
-public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountViewHolder> {
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    private List<Account> accountList;
-    private int selectedPosition = -1;
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Bank Account"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    public AccountAdapter(List<Account> accountList) {
-        this.accountList = accountList;
-    }
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAccounts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" />
 
-    @NonNull
-    @Override
-    public AccountViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_account, parent, false);
-        return new AccountViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull AccountViewHolder holder, int position) {
-        Account account = accountList.get(position);
-        holder.tvBankName.setText(account.getBankName());
-        holder.tvAccountNumber.setText("**** " + account.getAccountNumber());
-        holder.tvPinStatus.setVisibility(account.isPinSet() ? View.GONE : View.VISIBLE);
-        holder.radioSelect.setChecked(selectedPosition == position);
-
-        holder.itemView.setOnClickListener(v -> {
-            selectedPosition = holder.getAdapterPosition();
-            notifyDataSetChanged();
-        });
-
-        holder.radioSelect.setOnClickListener(v -> {
-            selectedPosition = holder.getAdapterPosition();
-            notifyDataSetChanged();
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return accountList.size();
-    }
-
-    static class AccountViewHolder extends RecyclerView.ViewHolder {
-        TextView tvBankName, tvAccountNumber, tvPinStatus;
-        RadioButton radioSelect;
-
-        public AccountViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvBankName = itemView.findViewById(R.id.tvBankName);
-            tvAccountNumber = itemView.findViewById(R.id.tvAccountNumber);
-            tvPinStatus = itemView.findViewById(R.id.tvPinStatus);
-            radioSelect = itemView.findViewById(R.id.radioSelect);
-        }
-    }
-}
+    <Button
+        android:id="@+id/btnAddAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Accounts"
+        android:layout_marginTop="20dp" />
+</LinearLayout>
