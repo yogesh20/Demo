@@ -1,67 +1,26 @@
 package com.example.yourapp;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+public class MainActivity extends AppCompatActivity {
 
-public class UpiBottomSheet extends BottomSheetDialogFragment {
+    Button showBottomSheetBtn;
 
-    public interface OnUpiSelectedListener {
-        void onUpiSelected(String upiId);
-    }
-
-    private OnUpiSelectedListener listener;
-
-    public UpiBottomSheet(OnUpiSelectedListener listener) {
-        this.listener = listener;
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, 
-                             @Nullable ViewGroup container, 
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_sheet_layout, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        showBottomSheetBtn = findViewById(R.id.showBottomSheetBtn);
 
-        RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
-        RadioButton radioCustom = view.findViewById(R.id.radioCustom);
-        EditText editCustomUpi = view.findViewById(R.id.editCustomUpi);
-        Button btnConfirm = view.findViewById(R.id.btnConfirm);
-
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.radioCustom) {
-                editCustomUpi.setVisibility(View.VISIBLE);
-            } else {
-                editCustomUpi.setVisibility(View.GONE);
-            }
+        showBottomSheetBtn.setOnClickListener(v -> {
+            UpiBottomSheet bottomSheet = new UpiBottomSheet(upiId ->
+                Toast.makeText(MainActivity.this, "Selected UPI ID: " + upiId, Toast.LENGTH_SHORT).show()
+            );
+            bottomSheet.show(getSupportFragmentManager(), "UPI_BOTTOM_SHEET");
         });
-
-        btnConfirm.setOnClickListener(v -> {
-            int selectedId = radioGroup.getCheckedRadioButtonId();
-            RadioButton selectedRadio = view.findViewById(selectedId);
-
-            String selectedUpiId;
-            if (selectedId == R.id.radioCustom) {
-                selectedUpiId = editCustomUpi.getText().toString().trim() + "@sbi";
-            } else {
-                selectedUpiId = selectedRadio.getText().toString();
-            }
-
-            if (listener != null) {
-                listener.onUpiSelected(selectedUpiId);
-            }
-
-            dismiss();
-        });
-
-        return view;
     }
 }
