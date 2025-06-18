@@ -1,68 +1,47 @@
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.tabs.TabLayout;
-import java.util.ArrayList;
 import java.util.List;
 
-public class BankBottomSheet extends BottomSheetDialogFragment {
+public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder> {
 
-    private RecyclerView recyclerView;
-    private TabLayout tabLayout;
-    private BankAdapter adapter;
+    private List<BankModel> bankList;
 
-    private List<BankModel> bankList = new ArrayList<>();
-    private List<BankModel> creditCardList = new ArrayList<>();
+    public BankAdapter(List<BankModel> bankList) {
+        this.bankList = bankList;
+    }
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_sheet_bank_selection, container, false);
-
-        tabLayout = view.findViewById(R.id.tabLayout);
-        recyclerView = view.findViewById(R.id.recyclerViewBanks);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        populateBankList();
-        populateCreditCardList();
-
-        adapter = new BankAdapter(bankList);
-        recyclerView.setAdapter(adapter);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0) {
-                    adapter = new BankAdapter(bankList);
-                } else {
-                    adapter = new BankAdapter(creditCardList);
-                }
-                recyclerView.setAdapter(adapter);
-            }
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override public void onTabReselected(TabLayout.Tab tab) {}
-        });
-
-        return view;
+    public BankViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bank, parent, false);
+        return new BankViewHolder(view);
     }
 
-    private void populateBankList() {
-        bankList.add(new BankModel("State Bank of India", R.drawable.ic_sbi));
-        bankList.add(new BankModel("HDFC Bank", R.drawable.ic_hdfc));
-        bankList.add(new BankModel("Axis Bank", R.drawable.ic_axis));
-        bankList.add(new BankModel("ICICI Bank", R.drawable.ic_icici));
-        bankList.add(new BankModel("Bank of Baroda", R.drawable.ic_bob));
+    @Override
+    public void onBindViewHolder(@NonNull BankViewHolder holder, int position) {
+        BankModel bank = bankList.get(position);
+        holder.tvBankName.setText(bank.getName());
+        holder.imgBankIcon.setImageResource(bank.getIconResId());
     }
 
-    private void populateCreditCardList() {
-        creditCardList.add(new BankModel("Rupay SBI Card", R.drawable.ic_rupay));
-        creditCardList.add(new BankModel("Rupay Axis Credit Card", R.drawable.ic_axis));
-        creditCardList.add(new BankModel("Rupay HDFC Credit Card", R.drawable.ic_hdfc));
+    @Override
+    public int getItemCount() {
+        return bankList.size();
+    }
+
+    static class BankViewHolder extends RecyclerView.ViewHolder {
+        TextView tvBankName;
+        ImageView imgBankIcon;
+
+        public BankViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvBankName = itemView.findViewById(R.id.tvBankName);
+            imgBankIcon = itemView.findViewById(R.id.imgBankIcon);
+        }
     }
 }
