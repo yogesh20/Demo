@@ -1,65 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+public class MainActivity extends AppCompatActivity {
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create UPI ID"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+    Button showBottomSheetBtn;
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        showBottomSheetBtn = findViewById(R.id.showBottomSheetBtn);
+        
+        showBottomSheetBtn.setOnClickListener(v -> showBottomSheetDialog());
+    }
 
-        <RadioButton
-            android:id="@+id/radioDefault1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8424888689@sbi"/>
+    private void showBottomSheetDialog() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_layout, null);
+        
+        RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
+        RadioButton radioCustom = view.findViewById(R.id.radioCustom);
+        EditText editCustomUpi = view.findViewById(R.id.editCustomUpi);
+        Button btnConfirm = view.findViewById(R.id.btnConfirm);
 
-        <RadioButton
-            android:id="@+id/radioDefault2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Siddheshkorgaonkar123@sbi"/>
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radioCustom) {
+                editCustomUpi.setVisibility(View.VISIBLE);
+            } else {
+                editCustomUpi.setVisibility(View.GONE);
+            }
+        });
 
-        <RadioButton
-            android:id="@+id/radioDefault3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Siddheshkorgaonkar@sbi"/>
+        btnConfirm.setOnClickListener(v -> {
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            RadioButton selectedRadio = view.findViewById(selectedId);
 
-        <RadioButton
-            android:id="@+id/radioCustom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Custom UPI ID"/>
+            String selectedUpiId;
+            if (selectedId == R.id.radioCustom) {
+                selectedUpiId = editCustomUpi.getText().toString().trim() + "@sbi";
+            } else {
+                selectedUpiId = selectedRadio.getText().toString();
+            }
 
-    </RadioGroup>
+            Toast.makeText(this, "Selected UPI ID: " + selectedUpiId, Toast.LENGTH_SHORT).show();
+            bottomSheetDialog.dismiss();
+        });
 
-    <EditText
-        android:id="@+id/editCustomUpi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter custom UPI ID"
-        android:inputType="text"
-        android:visibility="gone"
-        android:padding="8dp"/>
-
-    <Button
-        android:id="@+id/btnConfirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirm UPI ID"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+    }
+}
