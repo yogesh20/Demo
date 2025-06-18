@@ -1,60 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:background="@drawable/account_item_bg">
+public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountViewHolder> {
 
-    <RadioButton
-        android:id="@+id/radioSelect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:buttonTint="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+    private List<Account> accountList;
+    private int selectedPosition = -1;
 
-    <ImageView
-        android:id="@+id/bankIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_bank"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    public AccountAdapter(List<Account> accountList) {
+        this.accountList = accountList;
+    }
 
-    <TextView
-        android:id="@+id/tvBankName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Bank Name"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/bankIcon"
-        app:layout_constraintTop_toTopOf="@id/bankIcon"
-        app:layout_constraintEnd_toStartOf="@id/radioSelect"
-        android:layout_marginStart="12dp" />
+    @NonNull
+    @Override
+    public AccountViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_account, parent, false);
+        return new AccountViewHolder(view);
+    }
 
-    <TextView
-        android:id="@+id/tvAccountNumber"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="**** 1234"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/tvBankName"
-        app:layout_constraintStart_toStartOf="@id/tvBankName"
-        app:layout_constraintEnd_toEndOf="@id/tvBankName" />
+    @Override
+    public void onBindViewHolder(@NonNull AccountViewHolder holder, int position) {
+        Account account = accountList.get(position);
+        holder.tvBankName.setText(account.getBankName());
+        holder.tvAccountNumber.setText("**** " + account.getAccountNumber());
+        holder.tvPinStatus.setVisibility(account.isPinSet() ? View.GONE : View.VISIBLE);
+        holder.radioSelect.setChecked(selectedPosition == position);
 
-    <TextView
-        android:id="@+id/tvPinStatus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="UPI PIN Not Found. Set later"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@id/tvAccountNumber"
-        app:layout_constraintStart_toStartOf="@id/tvAccountNumber"
-        app:layout_constraintEnd_toEndOf="@id/tvAccountNumber" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        holder.itemView.setOnClickListener(v -> {
+            selectedPosition = holder.getAdapterPosition();
+            notifyDataSetChanged();
+        });
+
+        holder.radioSelect.setOnClickListener(v -> {
+            selectedPosition = holder.getAdapterPosition();
+            notifyDataSetChanged();
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return accountList.size();
+    }
+
+    static class AccountViewHolder extends RecyclerView.ViewHolder {
+        TextView tvBankName, tvAccountNumber, tvPinStatus;
+        RadioButton radioSelect;
+
+        public AccountViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvBankName = itemView.findViewById(R.id.tvBankName);
+            tvAccountNumber = itemView.findViewById(R.id.tvAccountNumber);
+            tvPinStatus = itemView.findViewById(R.id.tvPinStatus);
+            radioSelect = itemView.findViewById(R.id.radioSelect);
+        }
+    }
+}
