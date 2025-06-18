@@ -1,1 +1,76 @@
-hello
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Link your Bank now"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@color/black"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/darker_gray">
+
+        <com.google.android.material.tabs.TabItem
+            android:text="Bank Details" />
+
+        <com.google.android.material.tabs.TabItem
+            android:text="Rupay Credit Card" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search your bank"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:padding="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Popular Bank"
+        android:textStyle="bold"
+        android:paddingTop="12dp" />
+
+    <!-- Simulating popular banks with radio buttons -->
+    <RadioGroup
+        android:id="@+id/popularBanks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton android:text="State Bank of India" />
+        <RadioButton android:text="HDFC Bank" />
+        <RadioButton android:text="Axis Bank" />
+        <RadioButton android:text="ICICI Bank" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Bank"
+        android:textStyle="bold"
+        android:paddingTop="12dp" />
+
+    <RadioGroup
+        android:id="@+id/allBanks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton android:text="Allahabad Bank" />
+        <RadioButton android:text="Andhrapradesh Bank" />
+        <RadioButton android:text="Bank of Baroda" />
+        <RadioButton android:text="Bank of Maharashtra" />
+    </RadioGroup>
+</LinearLayout>
