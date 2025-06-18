@@ -1,47 +1,23 @@
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="12dp">
 
-public class BankAdapter extends RecyclerView.Adapter<BankAdapter.BankViewHolder> {
+    <ImageView
+        android:id="@+id/imgBankIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_bank_placeholder"
+        android:contentDescription="Bank Icon"
+        android:layout_marginEnd="12dp"/>
 
-    private List<BankModel> bankList;
-
-    public BankAdapter(List<BankModel> bankList) {
-        this.bankList = bankList;
-    }
-
-    @NonNull
-    @Override
-    public BankViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bank, parent, false);
-        return new BankViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull BankViewHolder holder, int position) {
-        BankModel bank = bankList.get(position);
-        holder.tvBankName.setText(bank.getName());
-        holder.imgBankIcon.setImageResource(bank.getIconResId());
-    }
-
-    @Override
-    public int getItemCount() {
-        return bankList.size();
-    }
-
-    static class BankViewHolder extends RecyclerView.ViewHolder {
-        TextView tvBankName;
-        ImageView imgBankIcon;
-
-        public BankViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvBankName = itemView.findViewById(R.id.tvBankName);
-            imgBankIcon = itemView.findViewById(R.id.imgBankIcon);
-        }
-    }
-}
+    <TextView
+        android:id="@+id/tvBankName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bank Name"
+        android:textSize="16sp"/>
+</LinearLayout>
