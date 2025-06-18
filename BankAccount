@@ -1,21 +1,36 @@
-public class MainActivity extends AppCompatActivity {
+package com.example.yourapp;
 
-    Button showBottomSheetBtn;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.*;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        showBottomSheetBtn = findViewById(R.id.showBottomSheetBtn);
-        
-        showBottomSheetBtn.setOnClickListener(v -> showBottomSheetDialog());
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+public class UpiBottomSheet extends BottomSheetDialogFragment {
+
+    public interface OnUpiSelectedListener {
+        void onUpiSelected(String upiId);
     }
 
-    private void showBottomSheetDialog() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_layout, null);
-        
+    private OnUpiSelectedListener listener;
+
+    public UpiBottomSheet(OnUpiSelectedListener listener) {
+        this.listener = listener;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, 
+                             @Nullable ViewGroup container, 
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.bottom_sheet_layout, container, false);
+
         RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
         RadioButton radioCustom = view.findViewById(R.id.radioCustom);
         EditText editCustomUpi = view.findViewById(R.id.editCustomUpi);
@@ -40,11 +55,13 @@ public class MainActivity extends AppCompatActivity {
                 selectedUpiId = selectedRadio.getText().toString();
             }
 
-            Toast.makeText(this, "Selected UPI ID: " + selectedUpiId, Toast.LENGTH_SHORT).show();
-            bottomSheetDialog.dismiss();
+            if (listener != null) {
+                listener.onUpiSelected(selectedUpiId);
+            }
+
+            dismiss();
         });
 
-        bottomSheetDialog.setContentView(view);
-        bottomSheetDialog.show();
+        return view;
     }
 }
