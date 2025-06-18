@@ -2,38 +2,67 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.tabs.TabLayout;
-
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BankBottomSheet extends BottomSheetDialogFragment {
 
+    private RecyclerView recyclerView;
+    private TabLayout tabLayout;
+    private BankAdapter adapter;
+
+    private List<BankModel> bankList = new ArrayList<>();
+    private List<BankModel> creditCardList = new ArrayList<>();
+
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_sheet_bank_selection, container, false);
 
-        EditText etSearch = view.findViewById(R.id.etSearch);
-        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
-        RadioGroup popularBanks = view.findViewById(R.id.popularBanks);
-        RadioGroup allBanks = view.findViewById(R.id.allBanks);
+        tabLayout = view.findViewById(R.id.tabLayout);
+        recyclerView = view.findViewById(R.id.recyclerViewBanks);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        popularBanks.setOnCheckedChangeListener((group, checkedId) -> {
-            Toast.makeText(getContext(),
-                    ((RadioButton) group.findViewById(checkedId)).getText().toString(),
-                    Toast.LENGTH_SHORT).show();
-        });
+        populateBankList();
+        populateCreditCardList();
 
-        allBanks.setOnCheckedChangeListener((group, checkedId) -> {
-            Toast.makeText(getContext(),
-                    ((RadioButton) group.findViewById(checkedId)).getText().toString(),
-                    Toast.LENGTH_SHORT).show();
+        adapter = new BankAdapter(bankList);
+        recyclerView.setAdapter(adapter);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    adapter = new BankAdapter(bankList);
+                } else {
+                    adapter = new BankAdapter(creditCardList);
+                }
+                recyclerView.setAdapter(adapter);
+            }
+            @Override public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         return view;
+    }
+
+    private void populateBankList() {
+        bankList.add(new BankModel("State Bank of India", R.drawable.ic_sbi));
+        bankList.add(new BankModel("HDFC Bank", R.drawable.ic_hdfc));
+        bankList.add(new BankModel("Axis Bank", R.drawable.ic_axis));
+        bankList.add(new BankModel("ICICI Bank", R.drawable.ic_icici));
+        bankList.add(new BankModel("Bank of Baroda", R.drawable.ic_bob));
+    }
+
+    private void populateCreditCardList() {
+        creditCardList.add(new BankModel("Rupay SBI Card", R.drawable.ic_rupay));
+        creditCardList.add(new BankModel("Rupay Axis Credit Card", R.drawable.ic_axis));
+        creditCardList.add(new BankModel("Rupay HDFC Credit Card", R.drawable.ic_hdfc));
     }
 }
