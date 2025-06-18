@@ -1,7 +1,20 @@
-data class BankAccount(
-    val bankName: String,
-    val accountNumber: String,
-    val isPrimary: Boolean,
-    var isSelected: Boolean = false,
-    val isUPIPinSet: Boolean = false
-)
+public class Account {
+    private String bankName;
+    private String accountNumber;
+    private boolean isSelected;
+    private boolean isPinSet;
+
+    public Account(String bankName, String accountNumber, boolean isSelected, boolean isPinSet) {
+        this.bankName = bankName;
+        this.accountNumber = accountNumber;
+        this.isSelected = isSelected;
+        this.isPinSet = isPinSet;
+    }
+
+    public String getBankName() { return bankName; }
+    public String getAccountNumber() { return accountNumber; }
+    public boolean isSelected() { return isSelected; }
+    public boolean isPinSet() { return isPinSet; }
+
+    public void setSelected(boolean selected) { isSelected = selected; }
+}
