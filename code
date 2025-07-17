@@ -1,1 +1,18 @@
+List<YourPojo> oldArrayList = ...; // your old list
+List<YourPojo> newArrayList = ...; // your new list
 
+// Step 1: Store old IDs in a HashSet
+Set<String> oldIds = new HashSet<>();
+for (YourPojo item : oldArrayList) {
+    oldIds.add(item.getId());
+}
+
+// Step 2: Check for extra IDs in newArrayList
+List<String> extraIds = new ArrayList<>();
+for (YourPojo item : newArrayList) {
+    if (!oldIds.contains(item.getId())) {
+        extraIds.add(item.getId());
+    }
+}
+
+// Now, extraIds contains all IDs that are new (present in newArrayList but not in oldArrayList)
