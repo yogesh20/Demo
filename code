@@ -1,5 +1,43 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="#FFCCCC"/>
-    <corners android:radius="12dp"/>
-</shape>
+public class MainActivity extends AppCompatActivity {
+
+    LinearLayout layoutFront, layoutBack;
+    Button btnFlip;
+    boolean isBackVisible = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        layoutFront = findViewById(R.id.layoutFront);
+        layoutBack = findViewById(R.id.layoutBack);
+        btnFlip = findViewById(R.id.btnFlip);
+
+        btnFlip.setOnClickListener(v -> flipCard());
+    }
+
+    private void flipCard() {
+        final View visibleLayout = isBackVisible ? layoutBack : layoutFront;
+        final View hiddenLayout = isBackVisible ? layoutFront : layoutBack;
+
+        // First half rotation (hide current view)
+        ObjectAnimator flipOut = ObjectAnimator.ofFloat(visibleLayout, "rotationY", 0f, 90f);
+        flipOut.setDuration(300);
+
+        // Second half rotation (show next view)
+        ObjectAnimator flipIn = ObjectAnimator.ofFloat(hiddenLayout, "rotationY", -90f, 0f);
+        flipIn.setDuration(300);
+
+        flipOut.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                visibleLayout.setVisibility(View.GONE);
+                hiddenLayout.setVisibility(View.VISIBLE);
+                flipIn.start();
+            }
+        });
+
+        flipOut.start();
+        isBackVisible = !isBackVisible;
+    }
+}
