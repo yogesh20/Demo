@@ -1,30 +1,10 @@
-etSearch = view.findViewById(R.id.etSearch);
-recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-adapter = new BankAdapter(bankList);
-recyclerView.setAdapter(adapter);
-
-etSearch.addTextChangedListener(new TextWatcher() {
-    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (adapter != null) {
-            adapter.getFilter().filter(s);
-        }
-    }
-    @Override public void afterTextChanged(Editable s) {}
-});
-
-
-tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-    @Override public void onTabSelected(TabLayout.Tab tab) {
-        if (tab.getPosition() == 0) {
-            adapter = new BankAdapter(bankList);
-        } else {
-            adapter = new BankAdapter(creditCardList);
-        }
-        recyclerView.setAdapter(adapter);
-        // Apply existing search text
-        adapter.getFilter().filter(etSearch.getText().toString());
-    }
-    @Override public void onTabUnselected(TabLayout.Tab tab) {}
-    @Override public void onTabReselected(TabLayout.Tab tab) {}
-});
+- Take access of Url from Harsh 
+- Make changes in the FOR sdk of screen cut issue 
+- Make changes in Central Mapper SDK of screen cut issue 
+- Trouble shoot for FOR SDK 
+- Trouble shoot for Central mapper SDK 
+- Create .aar file of FOR 
+- Create .aar file of Mapper sdk 
+- integration of FOR and Mapper Sdk 
+- Do unit testing of the application 
+- Give for SIT testing 
