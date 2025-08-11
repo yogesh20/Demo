@@ -1,11 +1,7 @@
 - Take access of Url from Harsh 
-- Make changes in the FOR sdk of screen cut issue 
-- Make changes in Central Mapper SDK of screen cut issue 
-- Trouble shoot for FOR SDK 
 - Trouble shoot for Central mapper SDK 
-- Update nucleai SDK to latest version 
-- Create .aar file of FOR 
 - Create .aar file of Mapper sdk 
-- integration of FOR and Mapper Sdk 
+- Integrate .aar file of mapper 
+- Migraate Nucleai SDK to latest 
 - Do unit testing of the application 
 - Give for SIT testing 
