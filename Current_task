@@ -2,10 +2,12 @@
 - Trouble shoot for Central mapper SDK 
 - Create .aar file of Mapper sdk 
 - Integrate .aar file of mapper 
-- Migraate Nucleai SDK to latest 
 - Do unit testing of the application 
 - NPCI CL page cuts in API level 35 level 
 
+done but 
+- Migraate Nucleai SDK to latest - Done but hotel and flight library are commit 
+and we are unable to test it because not getting items of nuclei 
 
 done 
 FOR SDK migration to 35 
