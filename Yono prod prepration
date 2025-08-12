@@ -5,5 +5,6 @@ yono current PROD SDK MAKING steps
 3) Check you added demand code properly or not 
 4) check SSL enable or not
 5) Is ISD disable ?
+6) Check CL is correct or not 
 6) change version inside gradle and deviceDetailsingleton
 7) Give only release SDK to yono
