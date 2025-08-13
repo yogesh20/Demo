@@ -1,1 +1,30 @@
-org.gradle.jvmargs=--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+    @Override
+    public void onGlobalLayout() {
+        Rect r = new Rect();
+        rootView.getWindowVisibleDisplayFrame(r);
+
+        int screenHeight = rootView.getRootView().getHeight();
+        int keypadHeight = screenHeight - r.bottom;
+
+        if (keypadHeight > screenHeight * 0.15) {
+            // Keyboard is opened
+        } else {
+            // Keyboard is closed
+            onKeyboardClosed();
+        }
+    }
+});
+
+private void onKeyboardClosed() {
+    Log.d("Keyboard", "Keyboard closed");
+}
+
+
+
+
+editText.setOnFocusChangeListener((v, hasFocus) -> {
+    if (!hasFocus) {
+        // Keyboard likely closed
+    }
+});
