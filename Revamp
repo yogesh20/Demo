@@ -1,2 +1,5 @@
 Revamp home pages changes tag is below used where action need to be taken
 // Todo correct it Revamp Home related changes - Yogesh
+
+Note - To avoid enter pin again and again i entered harcode pin in activity_signin.xml 
+
