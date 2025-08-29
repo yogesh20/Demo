@@ -3,3 +3,8 @@ Revamp home pages changes tag is below used where action need to be taken
 
 Note - To avoid enter pin again and again i entered harcode pin in activity_signin.xml 
 
+works on 
+- Banner 
+- Account part 
+- pay types ( pay to account , pay to bank , tap and pay ) 
+- Toolbar Qr Code 
