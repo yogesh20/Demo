@@ -1,43 +1,21 @@
-public class MainActivity extends AppCompatActivity {
-
-    LinearLayout layoutFront, layoutBack;
-    Button btnFlip;
-    boolean isBackVisible = false;
+viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+    @Override
+    public void onPageSelected(int position) {
+        super.onPageSelected(position);
+        // Called when a new page becomes selected
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        layoutFront = findViewById(R.id.layoutFront);
-        layoutBack = findViewById(R.id.layoutBack);
-        btnFlip = findViewById(R.id.btnFlip);
-
-        btnFlip.setOnClickListener(v -> flipCard());
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        // Called when the current page is scrolled
     }
 
-    private void flipCard() {
-        final View visibleLayout = isBackVisible ? layoutBack : layoutFront;
-        final View hiddenLayout = isBackVisible ? layoutFront : layoutBack;
-
-        // First half rotation (hide current view)
-        ObjectAnimator flipOut = ObjectAnimator.ofFloat(visibleLayout, "rotationY", 0f, 90f);
-        flipOut.setDuration(300);
-
-        // Second half rotation (show next view)
-        ObjectAnimator flipIn = ObjectAnimator.ofFloat(hiddenLayout, "rotationY", -90f, 0f);
-        flipIn.setDuration(300);
-
-        flipOut.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                visibleLayout.setVisibility(View.GONE);
-                hiddenLayout.setVisibility(View.VISIBLE);
-                flipIn.start();
-            }
-        });
-
-        flipOut.start();
-        isBackVisible = !isBackVisible;
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        super.onPageScrollStateChanged(state);
+        // Called when the scroll state changes
+        // state can be:
+        // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
     }
-}
+});
