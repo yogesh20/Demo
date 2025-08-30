@@ -2,6 +2,7 @@
 2) check all services are clickable and working 
 3) check Nuclai is loading using on production 
 4) check banner is showing on production build 
+5) make account balance showing related changes 
 5) make sure all items are clickable including bell icon
 6) Make recyclerview for action needed and add one one item in it 
 7) make UI perfect as design 
