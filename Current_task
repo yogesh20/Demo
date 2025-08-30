@@ -1,16 +1,9 @@
-- Take access of Url from Harsh 
-- Trouble shoot for Central mapper SDK 
-- Create .aar file of Mapper sdk 
-- Integrate .aar file of mapper 
-- Do unit testing of the application 
-- NPCI CL page cuts in API level 35 level 
-
-done but 
-- Migraate Nucleai SDK to latest - Done but hotel and flight library are commit 
-and we are unable to test it because not getting items of nuclei 
-
-done 
-FOR SDK migration to 35 
-For code changes for 35 
-FOR SDK integration in the project 
-Rate conversation code added in FOR SDK 
+1) Make services section proper 
+2) check all services are clickable and working 
+3) check Nuclai is loading using on production 
+4) check banner is showing on production build 
+5) make sure all items are clickable including bell icon
+6) Make recyclerview for action needed and add one one item in it 
+7) make UI perfect as design 
+8) Make navigation drawer item clickable 
+9) make each item clickable in navigation drawer 
