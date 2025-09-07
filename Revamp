@@ -1,43 +1,39 @@
-Revamp home pages changes tag is below used where action need to be taken
-// Todo correct it Revamp Home related changes - Yogesh
+public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float cornerRadius) {
+    if (bitmap == null) return null;
 
-Note - To avoid enter pin again and again i entered harcode pin in activity_signin.xml 
+    // Create output bitmap with same size
+    Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+            bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-works on 
-- Banner 
-- Account part 
-- pay types ( pay to account , pay to bank , tap and pay ) 
-- Toolbar Qr Code 
+    Canvas canvas = new Canvas(output);
 
+    final Paint paint = new Paint();
+    final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+    final RectF rectF = new RectF(rect);
 
-public class InitialsGenerator {
+    paint.setAntiAlias(true);
+    paint.setFilterBitmap(true);
+    paint.setDither(true);
 
-    public static String getInitials(String fullName) {
-        if (fullName == null || fullName.trim().isEmpty()) {
-            return "";
-        }
+    // Draw rounded rectangle mask
+    canvas.drawARGB(0, 0, 0, 0);
+    paint.setColor(Color.BLACK);
+    canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
 
-        // Trim and split by spaces
-        String[] parts = fullName.trim().split("\\s+");
+    // Apply SRC_IN mode so only corners get cropped
+    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+    canvas.drawBitmap(bitmap, rect, rect, paint);
 
-        if (parts.length >= 2) {
-            // Take first letter of first and last name
-            return (parts[0].substring(0, 1) + parts[1].substring(0, 1)).toUpperCase();
-        } else {
-            // Only first name, return first 2 letters if possible
-            String name = parts[0];
-            if (name.length() >= 2) {
-                return name.substring(0, 2).toUpperCase();
-            } else {
-                return name.toUpperCase(); // if name has only 1 letter
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getInitials("Ramdas Wani")); // Output: RW
-        System.out.println(getInitials("Ramdas"));      // Output: RA
-        System.out.println(getInitials("A"));           // Output: A
-        System.out.println(getInitials("   Ram   "));   // Output: RA
-    }
+    return output;
 }
+
+
+
+
+
+
+
+
+Bitmap original = BitmapFactory.decodeResource(getResources(), R.drawable.sample);
+Bitmap rounded = getRoundedCornerBitmap(original, 50f); // 50px corner radius
+imageView.setImageBitmap(rounded);
