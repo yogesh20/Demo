@@ -1,27 +1,31 @@
-public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float cornerRadius) {
+public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float radiusRatio) {
     if (bitmap == null) return null;
 
-    Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-            bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+    int width = bitmap.getWidth();
+    int height = bitmap.getHeight();
 
+    // radiusRatio is between 0.0 - 1.0 (e.g. 0.1 = 10%)
+    float cornerRadius = Math.min(width, height) * radiusRatio;
+
+    Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     Canvas canvas = new Canvas(output);
 
     final Paint paint = new Paint();
-    final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+    final Rect rect = new Rect(0, 0, width, height);
     final RectF rectF = new RectF(rect);
 
     paint.setAntiAlias(true);
 
-    // Clear canvas fully
     canvas.drawARGB(0, 0, 0, 0);
+    paint.setColor(Color.BLACK);
+    canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
 
-    // Draw rounded rect as clipping mask
-    Path path = new Path();
-    path.addRoundRect(rectF, cornerRadius, cornerRadius, Path.Direction.CW);
-    canvas.clipPath(path);
-
-    // Now draw the bitmap inside the clipped area
+    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
     canvas.drawBitmap(bitmap, rect, rect, paint);
 
     return output;
 }
+
+
+// 0.1f means 10% of image size (consistent across all)
+Bitmap rounded = getRoundedCornerBitmap(originalBitmap, 0.1f);
