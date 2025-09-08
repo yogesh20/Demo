@@ -1,31 +1,24 @@
-public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float radiusRatio) {
-    if (bitmap == null) return null;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    int width = bitmap.getWidth();
-    int height = bitmap.getHeight();
+public class DateExpiryChecker {
 
-    // radiusRatio is between 0.0 - 1.0 (e.g. 0.1 = 10%)
-    float cornerRadius = Math.min(width, height) * radiusRatio;
+    // Method to check expiry
+    public static boolean isExpired(String expiryDateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        try {
+            Date expiryDate = sdf.parse(expiryDateStr);
+            Date currentDate = new Date();
+            return currentDate.after(expiryDate); // true if expired
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false; // default false if parsing fails
+    }
 
-    Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-    Canvas canvas = new Canvas(output);
-
-    final Paint paint = new Paint();
-    final Rect rect = new Rect(0, 0, width, height);
-    final RectF rectF = new RectF(rect);
-
-    paint.setAntiAlias(true);
-
-    canvas.drawARGB(0, 0, 0, 0);
-    paint.setColor(Color.BLACK);
-    canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
-
-    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-    canvas.drawBitmap(bitmap, rect, rect, paint);
-
-    return output;
+    public static void main(String[] args) {
+        String expiry = "26/08/2024 13:35:47";
+        System.out.println(isExpired(expiry)); // Output depends on current date-time
+    }
 }
-
-
-// 0.1f means 10% of image size (consistent across all)
-Bitmap rounded = getRoundedCornerBitmap(originalBitmap, 0.1f);
