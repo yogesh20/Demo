@@ -1,24 +1,8 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class DateExpiryChecker {
-
-    // Method to check expiry
-    public static boolean isExpired(String expiryDateStr) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        try {
-            Date expiryDate = sdf.parse(expiryDateStr);
-            Date currentDate = new Date();
-            return currentDate.after(expiryDate); // true if expired
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false; // default false if parsing fails
-    }
-
-    public static void main(String[] args) {
-        String expiry = "26/08/2024 13:35:47";
-        System.out.println(isExpired(expiry)); // Output depends on current date-time
-    }
-}
+<?xml version="1.0" encoding="utf-8"?>
+<gradient xmlns:android="http://schemas.android.com/apk/res/android"
+    android:type="linear"
+    android:angle="270"        <!-- 270 means top to bottom -->
+    android:startColor="#EDEAFF"   <!-- Light purple (top) -->
+    android:endColor="#FFFFFF"     <!-- White (bottom) -->
+    android:gradientRadius="90"
+    android:dither="true" />
