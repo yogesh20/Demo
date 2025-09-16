@@ -1,46 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Top 1/7 -->
-    <item
-        android:top="0dp"
-        android:bottom="100dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#EDEAFF"/>
-        </shape>
-    </item>
-
-    <!-- Middle 5/7 -->
-    <item
-        android:top="100dp"
-        android:bottom="600dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#FFFFFF"/>
-        </shape>
-    </item>
-
-    <!-- Bottom 1/7 -->
-    <item
-        android:top="600dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#EDEAFF"/>
-        </shape>
-    </item>
-
-</layer-list>
-
-
-
-
-<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/bg_gradient.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
     <gradient
         android:type="linear"
-        android:angle="270"    <!-- top to bottom -->
-        android:startColor="#EDEAFF"   <!-- top -->
-        android:centerColor="#FFFFFF"  <!-- middle -->
-        android:endColor="#EDEAFF"     <!-- bottom -->
-        android:centerY="0.5" />       <!-- middle position -->
+        android:angle="270"
+        android:colors="@array/gradient_colors"
+        android:positions="@array/gradient_positions" />
+
 </shape>
+
+
+
+<resources>
+    <!-- Gradient Colors -->
+    <array name="gradient_colors">
+        <item>@android:color/white</item>     <!-- Top -->
+        <item>#F2F2F2</item>                  <!-- Middle (light gray shade) -->
+        <item>@android:color/white</item>     <!-- Bottom -->
+    </array>
+
+    <!-- Gradient Positions -->
+    <array name="gradient_positions">
+        <item>0.0</item>   <!-- Start -->
+        <item>0.5</item>   <!-- Middle -->
+        <item>1.0</item>   <!-- End -->
+    </array>
+</resources>
