@@ -1,12 +1,125 @@
-TextView tvAddPerson = findViewById(R.id.tvAddPerson);
-TextView tvAddDevice = findViewById(R.id.tvAddDevice);
+import android.os.Parcel;
+import android.os.Parcelable;
 
-// Bold only "Add person"
-SpannableString personText = new SpannableString("Add person to circle");
-personText.setSpan(new StyleSpan(Typeface.BOLD), 0, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-tvAddPerson.setText(personText);
+import androidx.annotation.NonNull;
 
-// Bold only "Add device"
-SpannableString deviceText = new SpannableString("Add device to circle");
-deviceText.setSpan(new StyleSpan(Typeface.BOLD), 0, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-tvAddDevice.setText(deviceText);
+import com.google.gson.annotations.SerializedName;
+
+
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Created by MGS1747 on 1/4/2017.
+ */
+
+public class IOTTransactionHistory implements Parcelable {
+    @SerializedName("trnRefNo")
+    public String refNo;
+    @SerializedName("trnDate")
+    public String time;
+    @SerializedName("txnType")
+    public String transactionType;
+    @SerializedName("txnNote")
+    public String remarks;
+    @SerializedName("txnStatus")
+    public String status;
+    @SerializedName("drCrFlag")
+    public String transactionFlag;
+    @SerializedName("txnStatusDesc")
+    public String statusDesc;
+    @SerializedName("txnAmount")
+    public String amount;
+    @SerializedName("custRefNo")
+    public String customerRefNo;
+
+    @SerializedName("payeeName")
+    public String payeeName;
+    @SerializedName("payeeVirtualAddress")
+    public String payeeVpa;
+    @SerializedName("payeeAccountNo")
+    public String payeeAccountNumber;
+    @SerializedName("payeeMaskAccountNo")
+    public String payeeMaskAccountNo;
+    @SerializedName("payeeBankCode")
+    public String payeeBankCode;
+    @SerializedName("payeeIfsc")
+    public String payeeIfsc;
+
+
+    @SerializedName("payerName")
+    public String payerName;
+    @SerializedName("payerVirtualAddress")
+    public String payerVpa;
+    @SerializedName("payerAccountNo")
+    public String payerAccountNumber;
+    @SerializedName("payerBankCode")
+    public String payerBankCode;
+    @SerializedName("payerIfsc")
+    public String payerIfsc;
+
+    public String addressType;
+    @SerializedName("disputeStatus")
+    public String disputeStatus;
+
+
+
+    @SerializedName("payer_aadhaar_number")
+    public String payer_aadhaar_number;
+
+    @SerializedName("payType")
+    public String payType;
+
+    public String rrn;
+    public String aeps_trans_ref_no;
+    public String reason_desc;
+
+    /*Added for Mandate transaction history by chetan 261018*/
+    @SerializedName("txn_sub_type")
+    public String txnSubType;
+    @SerializedName("ref_url")
+    public String refUrl;
+
+    @SerializedName("disputeEnable")
+    public String disputeEnable;
+
+    //UDIR
+    @SerializedName("disputeStaus")
+    public String disputeStaus;
+    /*UDIR Parameters*/
+    @SerializedName("back_office_enq_flag")
+    public String backOfficeEnqFlag;
+    @SerializedName("back_office_txn_date")
+    public String backOfficeTxnDate;
+
+    @SerializedName("txnId")
+    public String txnId;
+    @SerializedName("adjFlag")
+    public String adjFlag;
+    @SerializedName("adjCode")
+    public String adjCode;
+    //  Upi Lite
+    @SerializedName("isLiteTxn")
+    public boolean isLiteTxn;
+
+    @SerializedName("payerAccountType")
+    public String payerAccountType;   // added for credit card - yogesh wani - to show payment through credit card or non credit card account
+
+    //tap n pay
+    @SerializedName("initiation_mode")
+    public String initiationMode;
+
+
+    @SerializedName("unauthflag")   // Added for unauthorisedTxn
+    public String unauthflag;
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+
+    }
+}
