@@ -5,13 +5,6 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-
-import com.google.gson.annotations.SerializedName;
-
-/**
- * Created by MGS1747 on 1/4/2017.
- */
-
 public class IOTTransactionHistory implements Parcelable {
     @SerializedName("trnRefNo")
     public String refNo;
@@ -45,7 +38,6 @@ public class IOTTransactionHistory implements Parcelable {
     @SerializedName("payeeIfsc")
     public String payeeIfsc;
 
-
     @SerializedName("payerName")
     public String payerName;
     @SerializedName("payerVirtualAddress")
@@ -61,8 +53,6 @@ public class IOTTransactionHistory implements Parcelable {
     @SerializedName("disputeStatus")
     public String disputeStatus;
 
-
-
     @SerializedName("payer_aadhaar_number")
     public String payer_aadhaar_number;
 
@@ -73,7 +63,6 @@ public class IOTTransactionHistory implements Parcelable {
     public String aeps_trans_ref_no;
     public String reason_desc;
 
-    /*Added for Mandate transaction history by chetan 261018*/
     @SerializedName("txn_sub_type")
     public String txnSubType;
     @SerializedName("ref_url")
@@ -82,10 +71,9 @@ public class IOTTransactionHistory implements Parcelable {
     @SerializedName("disputeEnable")
     public String disputeEnable;
 
-    //UDIR
     @SerializedName("disputeStaus")
     public String disputeStaus;
-    /*UDIR Parameters*/
+
     @SerializedName("back_office_enq_flag")
     public String backOfficeEnqFlag;
     @SerializedName("back_office_txn_date")
@@ -97,29 +85,122 @@ public class IOTTransactionHistory implements Parcelable {
     public String adjFlag;
     @SerializedName("adjCode")
     public String adjCode;
-    //  Upi Lite
+
     @SerializedName("isLiteTxn")
     public boolean isLiteTxn;
 
     @SerializedName("payerAccountType")
-    public String payerAccountType;   // added for credit card - yogesh wani - to show payment through credit card or non credit card account
+    public String payerAccountType;
 
-    //tap n pay
     @SerializedName("initiation_mode")
     public String initiationMode;
 
-
-    @SerializedName("unauthflag")   // Added for unauthorisedTxn
+    @SerializedName("unauthflag")
     public String unauthflag;
 
+    // ===== Parcelable implementation =====
+
+    protected IOTTransactionHistory(Parcel in) {
+        refNo = in.readString();
+        time = in.readString();
+        transactionType = in.readString();
+        remarks = in.readString();
+        status = in.readString();
+        transactionFlag = in.readString();
+        statusDesc = in.readString();
+        amount = in.readString();
+        customerRefNo = in.readString();
+        payeeName = in.readString();
+        payeeVpa = in.readString();
+        payeeAccountNumber = in.readString();
+        payeeMaskAccountNo = in.readString();
+        payeeBankCode = in.readString();
+        payeeIfsc = in.readString();
+        payerName = in.readString();
+        payerVpa = in.readString();
+        payerAccountNumber = in.readString();
+        payerBankCode = in.readString();
+        payerIfsc = in.readString();
+        addressType = in.readString();
+        disputeStatus = in.readString();
+        payer_aadhaar_number = in.readString();
+        payType = in.readString();
+        rrn = in.readString();
+        aeps_trans_ref_no = in.readString();
+        reason_desc = in.readString();
+        txnSubType = in.readString();
+        refUrl = in.readString();
+        disputeEnable = in.readString();
+        disputeStaus = in.readString();
+        backOfficeEnqFlag = in.readString();
+        backOfficeTxnDate = in.readString();
+        txnId = in.readString();
+        adjFlag = in.readString();
+        adjCode = in.readString();
+        isLiteTxn = in.readByte() != 0;
+        payerAccountType = in.readString();
+        initiationMode = in.readString();
+        unauthflag = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(refNo);
+        dest.writeString(time);
+        dest.writeString(transactionType);
+        dest.writeString(remarks);
+        dest.writeString(status);
+        dest.writeString(transactionFlag);
+        dest.writeString(statusDesc);
+        dest.writeString(amount);
+        dest.writeString(customerRefNo);
+        dest.writeString(payeeName);
+        dest.writeString(payeeVpa);
+        dest.writeString(payeeAccountNumber);
+        dest.writeString(payeeMaskAccountNo);
+        dest.writeString(payeeBankCode);
+        dest.writeString(payeeIfsc);
+        dest.writeString(payerName);
+        dest.writeString(payerVpa);
+        dest.writeString(payerAccountNumber);
+        dest.writeString(payerBankCode);
+        dest.writeString(payerIfsc);
+        dest.writeString(addressType);
+        dest.writeString(disputeStatus);
+        dest.writeString(payer_aadhaar_number);
+        dest.writeString(payType);
+        dest.writeString(rrn);
+        dest.writeString(aeps_trans_ref_no);
+        dest.writeString(reason_desc);
+        dest.writeString(txnSubType);
+        dest.writeString(refUrl);
+        dest.writeString(disputeEnable);
+        dest.writeString(disputeStaus);
+        dest.writeString(backOfficeEnqFlag);
+        dest.writeString(backOfficeTxnDate);
+        dest.writeString(txnId);
+        dest.writeString(adjFlag);
+        dest.writeString(adjCode);
+        dest.writeByte((byte) (isLiteTxn ? 1 : 0));
+        dest.writeString(payerAccountType);
+        dest.writeString(initiationMode);
+        dest.writeString(unauthflag);
+    }
 
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
+    public static final Creator<IOTTransactionHistory> CREATOR = new Creator<IOTTransactionHistory>() {
+        @Override
+        public IOTTransactionHistory createFromParcel(Parcel in) {
+            return new IOTTransactionHistory(in);
+        }
 
-    }
+        @Override
+        public IOTTransactionHistory[] newArray(int size) {
+            return new IOTTransactionHistory[size];
+        }
+    };
 }
