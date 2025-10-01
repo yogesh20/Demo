@@ -1,206 +1,72 @@
-import android.os.Parcel;
-import android.os.Parcelable;
+Terms and Conditions – UPI Circle
 
-import androidx.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
+These terms and conditions (“UPI Circle Terms”) apply to and govern the UPI Circle (Defined Below) feature on the [•]1. Please read UPI Circle Terms carefully before accessing or using UPI Circle.
 
-public class IOTTransactionHistory implements Parcelable {
-    @SerializedName("trnRefNo")
-    public String refNo;
-    @SerializedName("trnDate")
-    public String time;
-    @SerializedName("txnType")
-    public String transactionType;
-    @SerializedName("txnNote")
-    public String remarks;
-    @SerializedName("txnStatus")
-    public String status;
-    @SerializedName("drCrFlag")
-    public String transactionFlag;
-    @SerializedName("txnStatusDesc")
-    public String statusDesc;
-    @SerializedName("txnAmount")
-    public String amount;
-    @SerializedName("custRefNo")
-    public String customerRefNo;
+The UPI Circle Terms are in addition to and not in derogation of the terms and conditions governing the use of _______ App (“App Terms”). By enabling, or using, UPI Circle, you acknowledge that you have read, understood and agree to be bound by the UPI Circle Terms.
 
-    @SerializedName("payeeName")
-    public String payeeName;
-    @SerializedName("payeeVirtualAddress")
-    public String payeeVpa;
-    @SerializedName("payeeAccountNo")
-    public String payeeAccountNumber;
-    @SerializedName("payeeMaskAccountNo")
-    public String payeeMaskAccountNo;
-    @SerializedName("payeeBankCode")
-    public String payeeBankCode;
-    @SerializedName("payeeIfsc")
-    public String payeeIfsc;
 
-    @SerializedName("payerName")
-    public String payerName;
-    @SerializedName("payerVirtualAddress")
-    public String payerVpa;
-    @SerializedName("payerAccountNo")
-    public String payerAccountNumber;
-    @SerializedName("payerBankCode")
-    public String payerBankCode;
-    @SerializedName("payerIfsc")
-    public String payerIfsc;
+DEFINITIONS:
 
-    public String addressType;
-    @SerializedName("disputeStatus")
-    public String disputeStatus;
+In the UPI Circle Terms, the following words shall have the meanings as set below unless the context indicates otherwise. All other capitalized terms used in the UPI Circle Terms but not defined herein shall have the meaning ascribed to them in the _______App Terms.
 
-    @SerializedName("payer_aadhaar_number")
-    public String payer_aadhaar_number;
+“UPI Circle” means the feature that enables a Primary User to authorize a Secondary User to link his/her UPI ID with the UPI ID of such Primary User and to make UPI payments/transactions, on a Full Delegation or Partial Delegation basis. In case of Full Delegation, Primary User can assign the maximum limit to Secondary User for making such payments/transactions (i.e. the maximum amount of funds that can be utilized from the bank account held in the name of Primary User for making the aforesaid UPI payments/transactions).
 
-    @SerializedName("payType")
-    public String payType;
+“Full Delegation” means the method/mode using which a Primary User can authorize a Secondary User to initiate and complete UPI Circle transactions as per defined maximum spends limits.
 
-    public String rrn;
-    public String aeps_trans_ref_no;
-    public String reason_desc;
+“Partial Delegation” means the method/mode using which a Primary User can authorize a Secondary user to initiate and complete a UPI Circle based transaction subject to Primary User authorizing the said transaction by entering his/her UPI PIN.
 
-    @SerializedName("txn_sub_type")
-    public String txnSubType;
-    @SerializedName("ref_url")
-    public String refUrl;
+“Primary User” means an individual using the ________ App for availing UPI based services/facilities and is delegating payments to a Secondary User using UPI Circle feature of UPI available in the ________ App.
 
-    @SerializedName("disputeEnable")
-    public String disputeEnable;
+“Secondary User” means a user of UPI who is authorized by Primary User to make UPI Circle transactions from the bank account of Primary User linked to UPI.
 
-    @SerializedName("disputeStaus")
-    public String disputeStaus;
 
-    @SerializedName("back_office_enq_flag")
-    public String backOfficeEnqFlag;
-    @SerializedName("back_office_txn_date")
-    public String backOfficeTxnDate;
 
-    @SerializedName("txnId")
-    public String txnId;
-    @SerializedName("adjFlag")
-    public String adjFlag;
-    @SerializedName("adjCode")
-    public String adjCode;
+TERMS:
 
-    @SerializedName("isLiteTxn")
-    public boolean isLiteTxn;
+You understand, agree, confirm and undertake that:
 
-    @SerializedName("payerAccountType")
-    public String payerAccountType;
+1. For Primary User:
 
-    @SerializedName("initiation_mode")
-    public String initiationMode;
+· You shall be solely responsible to verify and validate the UPI ID and mobile number of the Secondary User before linking his/ her UPI ID with your UPI ID and authorize him / her to make UPI transactions under UPI Circle, to ensure that the correct person is authorized as Secondary User.
 
-    @SerializedName("unauthflag")
-    public String unauthflag;
+· You shall be solely responsible for any and every detail, including but not limited to its identification or authentication or accuracy or validation or appropriateness or correctness, provided in relation to the Secondary User. Such details, in the format as provided by you, will be used for the purpose of enabling the Secondary User to perform UPI transactions under UPI Circle as required for Full Delegation.
 
-    // ===== Parcelable implementation =====
+· You can modify or revoke the authorization granted to Secondary User for UPI Circle.
 
-    protected IOTTransactionHistory(Parcel in) {
-        refNo = in.readString();
-        time = in.readString();
-        transactionType = in.readString();
-        remarks = in.readString();
-        status = in.readString();
-        transactionFlag = in.readString();
-        statusDesc = in.readString();
-        amount = in.readString();
-        customerRefNo = in.readString();
-        payeeName = in.readString();
-        payeeVpa = in.readString();
-        payeeAccountNumber = in.readString();
-        payeeMaskAccountNo = in.readString();
-        payeeBankCode = in.readString();
-        payeeIfsc = in.readString();
-        payerName = in.readString();
-        payerVpa = in.readString();
-        payerAccountNumber = in.readString();
-        payerBankCode = in.readString();
-        payerIfsc = in.readString();
-        addressType = in.readString();
-        disputeStatus = in.readString();
-        payer_aadhaar_number = in.readString();
-        payType = in.readString();
-        rrn = in.readString();
-        aeps_trans_ref_no = in.readString();
-        reason_desc = in.readString();
-        txnSubType = in.readString();
-        refUrl = in.readString();
-        disputeEnable = in.readString();
-        disputeStaus = in.readString();
-        backOfficeEnqFlag = in.readString();
-        backOfficeTxnDate = in.readString();
-        txnId = in.readString();
-        adjFlag = in.readString();
-        adjCode = in.readString();
-        isLiteTxn = in.readByte() != 0;
-        payerAccountType = in.readString();
-        initiationMode = in.readString();
-        unauthflag = in.readString();
-    }
+· You will have access to and visibility of all the transactions made by Secondary User under the UPI Circle.
 
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(refNo);
-        dest.writeString(time);
-        dest.writeString(transactionType);
-        dest.writeString(remarks);
-        dest.writeString(status);
-        dest.writeString(transactionFlag);
-        dest.writeString(statusDesc);
-        dest.writeString(amount);
-        dest.writeString(customerRefNo);
-        dest.writeString(payeeName);
-        dest.writeString(payeeVpa);
-        dest.writeString(payeeAccountNumber);
-        dest.writeString(payeeMaskAccountNo);
-        dest.writeString(payeeBankCode);
-        dest.writeString(payeeIfsc);
-        dest.writeString(payerName);
-        dest.writeString(payerVpa);
-        dest.writeString(payerAccountNumber);
-        dest.writeString(payerBankCode);
-        dest.writeString(payerIfsc);
-        dest.writeString(addressType);
-        dest.writeString(disputeStatus);
-        dest.writeString(payer_aadhaar_number);
-        dest.writeString(payType);
-        dest.writeString(rrn);
-        dest.writeString(aeps_trans_ref_no);
-        dest.writeString(reason_desc);
-        dest.writeString(txnSubType);
-        dest.writeString(refUrl);
-        dest.writeString(disputeEnable);
-        dest.writeString(disputeStaus);
-        dest.writeString(backOfficeEnqFlag);
-        dest.writeString(backOfficeTxnDate);
-        dest.writeString(txnId);
-        dest.writeString(adjFlag);
-        dest.writeString(adjCode);
-        dest.writeByte((byte) (isLiteTxn ? 1 : 0));
-        dest.writeString(payerAccountType);
-        dest.writeString(initiationMode);
-        dest.writeString(unauthflag);
-    }
+· You represent that you are aware of the identity of the Secondary User and shall, in the course of using UPI Circle, comply with the laws of India as applicable.
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+· You shall be solely responsible for all transactions and actions performed by Secondary User added/ authorized by you under UPI Circle. You shall not hold NPCI responsible for any un-authorized transactions made by your Secondary User using UPI Circle. NPCI shall not be held liable by you or any other person for any losses, damages and liabilities which may arise as a result of any act or omission by you or by the Secondary User in complying with any terms and conditions applicable to UPI Circle.
 
-    public static final Creator<IOTTransactionHistory> CREATOR = new Creator<IOTTransactionHistory>() {
-        @Override
-        public IOTTransactionHistory createFromParcel(Parcel in) {
-            return new IOTTransactionHistory(in);
-        }
+· In the event no transactions are carried through _____ App using UPI Circle for such period as may be prescribed from time to time, the relevant Secondary User’s authorization to conduct UPI Circle transactions may be suspended or terminated.
 
-        @Override
-        public IOTTransactionHistory[] newArray(int size) {
-            return new IOTTransactionHistory[size];
-        }
-    };
-}
+
+2. For Secondary User:
+
+· By accepting the request to link your UPI ID to the UPI ID of the Primary User under UPI Circle, you hereby agree to share your name, phone number, UPI ID and transaction details with the Primary User and other third parties involved in the processing of UPI Circle transactions.
+
+· You hereby agree to share any requested details of your identification with the Primary User and permit the Primary User to share such details with other parties, including any party’s required for processing the UPI Circle transactions for Full Delegation.
+
+· You can de-link your UPI ID with the Primary User at any time.
+
+
+3. Other Terms:
+
+
+· At any point in time a maximum limit of ₹15000 per month is allowed for making transactions through UPI Circle in Full Delegation.
+
+
+· At any point of time maximum limit of ₹5000 is allowed per transaction for making transactions through UPI Circle in Full Delegation.
+
+· Under Full Delegation a Secondary User’s UPI ID can be linked with the Primary User’s UPI ID for a maximum term of 5 years and a minimum term of 1 month.
+
+
+· After successful authorization and linking of the UPI ID of the Secondary User with the Primary User, there will be a cooling period of 30 minutes during which no transaction shall be allowed to be initiated.
+
+
+· Notwithstanding anything to the contrary contained in the UPI Circle Terms, [PSP Name / App provider name] reserves the right to suspend or terminate your access to UPI Circle services, or require you to change your App password or UPI PIN, at any time in its sole discretion and without any prior notice to you.
+
+
+· The UPI Circle Terms shall be read in conjunction with the _______ Terms. The UPI Circle Terms and _____ Terms shall together form the entire agreement between you and ________ App with respect to UPI Circle. In the event of conflict between the UPI Circle Terms and the _______ App Terms, the UPI Circle Terms shall have an overriding effect.
