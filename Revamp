@@ -1,75 +1,136 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms and Conditions – UPI Circle</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      color: #333;
+
+import android.content.Context
+import android.speech.tts.TextToSpeech
+import android.text.TextUtils
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import com.sbi.upi.customerMode.common.AppConstants
+import com.sbi.upi.customerMode.common.LogUtil
+import com.sbi.upi.customerMode.common.MyApplication
+import com.sbi.upi.customerMode.common.data.local.preferences.SharedPreferenceHelper
+import java.util.*
+
+
+class TextToSpeechWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+    private var textSpeechString: String? = null
+    private var pipelineData: String? = null
+    private var transactionType = 0
+    private var textToSpeech: TextToSpeech? = null
+    private var isReceiver = false
+    var transactionAmount: String? = null
+
+    //Security Enhancement added for text to speech , here below text made hardcore because text language is independent of voice language  so sound language can be different from app text language
+    var englishCreditText = "Rupee received on BHIM SBI pay"
+    var hindiCreditTextOne = "भीम एसबीआई पे पे "
+    var hindiCreditTextTwo = "रुपये प्राप्त हुए"
+    private val TTS_DEFAULT_PITCH = "tts_default_pitch"
+    override fun doWork(): Result {
+        //call methods to perform background task
+
+        //get Input Data back using "inputData" variable
+        textSpeechString = inputData.getString(AppConstants.TEXTTOSPEECHSTRING)
+        transactionType = inputData.getInt(AppConstants.TRANSACTIONTYPE, 0)
+        isReceiver = inputData.getBoolean(AppConstants.ISRECEIVER, false)
+        pipelineData = inputData.getString(AppConstants.PIPELINEDATA)
+        if (!textSpeechString!!.isEmpty() && (SharedPreferenceHelper.getInstance().isNotificationVoiceEnabled || SharedPreferenceHelper.getInstance().isMerNotificationVoiceEnabled)
+                && (transactionType == AppConstants.UPI_TRANSACTION || transactionType == AppConstants.AEPS_TRANSACTION || transactionType == AppConstants.MERCHANT_CREDIT_NOTIFICATION) && isReceiver) {
+            LogUtil.info("jksdbjksdvbkjsdv_0", "true")
+            if (MyApplication.IS_SBIPAY_MERCHANT && pipelineData != null && !pipelineData!!.isEmpty()) {
+                //for Merchant mode
+                playSoundNew(newGetAmountFromString())
+            } else if (textSpeechString != null && !textSpeechString!!.isEmpty()) {
+                //for Customer mode
+                playSoundNew(getAmountFromString())
+            }
+        } else {
+            LogUtil.info("jksdbjksdvbkjsdv_1", "true")
+
+            LogUtil.info(TAG, "false")
+        }
+        return Result.success()
     }
-    h1, h2 {
-      color: #111;
+
+    private fun newGetAmountFromString(): String? {
+        val data: String
+        val arrOfStr: Array<String>
+        var transactionAMount: String? = null
+        try {
+            if (!TextUtils.isEmpty(pipelineData)) {
+                data = pipelineData!!.replace("|", ",")
+                arrOfStr = data.split(",".toRegex(), 6).toTypedArray()
+                transactionAMount = arrOfStr[3]
+            }
+        } catch (e: Exception) {
+            LogUtil.printException(e)
+        }
+        return transactionAMount
+    }//this will give amount
+
+    //this finds the first occurrence of "."
+//    private val amountFromString: String
+//        private get() {
+//            transactionAmount = textSpeechString!!.substring(textSpeechString!!.lastIndexOf("Rs.") + 3)
+//            val iend = transactionAmount!!.indexOf(" ") //this finds the first occurrence of "."
+//            if (iend != -1) {
+//                transactionAmount = transactionAmount!!.substring(0, iend) //this will give amount
+//            }
+//            return transactionAmount as String
+//        }
+
+
+    private fun getAmountFromString(): String? {
+        transactionAmount = textSpeechString!!.substring(textSpeechString!!.lastIndexOf("Rs.") + 3)
+        val iend = transactionAmount!!.indexOf(" ") //this finds the first occurrence of "."
+        if (iend != -1) {
+            transactionAmount = transactionAmount!!.substring(0, iend) //this will give amount
+        }
+        return transactionAmount
     }
-    ul {
-      margin: 10px 0 10px 30px;
+
+    private fun playSoundNew(transactionAmount: String?) {
+        textToSpeech = TextToSpeech(applicationContext) { status ->
+            try {
+                if (status == TextToSpeech.SUCCESS) {
+                    //User selected language for notification
+                    val languageCode: String
+                    languageCode = if (MyApplication.IS_SBIPAY_MERCHANT) {
+                        SharedPreferenceHelper.getInstance().merVoiceNotificatonLanguageCode
+                    } else {
+                        SharedPreferenceHelper.getInstance().voiceNotificatonLanguageCode
+                    }
+                    val result: Int
+                    result = if (languageCode.equals(AppConstants.CODE_HINDI, ignoreCase = true)) {
+                        textToSpeech!!.setLanguage(Locale("hi", "IN"))
+                    } else {
+                        textToSpeech!!.setLanguage(Locale.ENGLISH)
+                    }
+                    var textToRead: String
+                    textToRead = if (SharedPreferenceHelper.getInstance().merVoiceNotificatonLanguageCode == "hi" && MyApplication.IS_SBIPAY_MERCHANT || SharedPreferenceHelper.getInstance().voiceNotificatonLanguageCode == "hi" && !MyApplication.IS_SBIPAY_MERCHANT) {
+                        "$hindiCreditTextOne $transactionAmount $hindiCreditTextTwo"
+                    } else {
+                        "$transactionAmount $englishCreditText"
+                    }
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        textToSpeech!!.language = Locale.ENGLISH
+                    }
+                    LogUtil.info("jksdbjksdvbkjsdv_2", "true")
+
+//                        textToSpeech.setPitch(1f);
+//                        textToSpeech.setSpeechRate(1f);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        textToSpeech!!.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,"2")
+                    }
+
+//                        textToSpeech.setPitch(1f);
+//                        textToSpeech.setSpeechRate(1f);
+                }
+            } catch (e: Exception) {
+            }
+        }
     }
-    li {
-      margin-bottom: 8px;
+
+    companion object {
+        private const val TAG = "BackupWorker"
     }
-    .section {
-      margin-bottom: 25px;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>Terms and Conditions – UPI Circle</h1>
-
-  <p>
-    These terms and conditions (“<b>UPI Circle Terms</b>”) apply to and govern the UPI Circle (Defined Below) feature on the [•]. Please read UPI Circle Terms carefully before accessing or using UPI Circle.
-  </p>
-  <p>
-    The UPI Circle Terms are in addition to and not in derogation of the terms and conditions governing the use of _______ App (“App Terms”). By enabling, or using, UPI Circle, you acknowledge that you have read, understood and agree to be bound by the UPI Circle Terms.
-  </p>
-
-  <div class="section">
-    <h2>Definitions</h2>
-    <p>In the UPI Circle Terms, the following words shall have the meanings as set below unless the context indicates otherwise. All other capitalized terms used in the UPI Circle Terms but not defined herein shall have the meaning ascribed to them in the _______ App Terms.</p>
-    <ul>
-      <li><b>“UPI Circle”</b> means the feature that enables a Primary User to authorize a Secondary User to link his/her UPI ID with the UPI ID of such Primary User and to make UPI payments/transactions, on a Full Delegation or Partial Delegation basis.</li>
-      <li><b>“Full Delegation”</b> means the method/mode using which a Primary User can authorize a Secondary User to initiate and complete UPI Circle transactions as per defined maximum spends limits.</li>
-      <li><b>“Partial Delegation”</b> means the method/mode using which a Primary User can authorize a Secondary user to initiate and complete a UPI Circle based transaction subject to Primary User authorizing the said transaction by entering his/her UPI PIN.</li>
-      <li><b>“Primary User”</b> means an individual using the ________ App for availing UPI based services/facilities and is delegating payments to a Secondary User using UPI Circle feature of UPI available in the ________ App.</li>
-      <li><b>“Secondary User”</b> means a user of UPI who is authorized by Primary User to make UPI Circle transactions from the bank account of Primary User linked to UPI.</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Terms</h2>
-    <h3>1. For Primary User:</h3>
-    <ul>
-      <li>You shall be solely responsible to verify and validate the UPI ID and mobile number of the Secondary User...</li>
-      <li>You shall be solely responsible for any and every detail, including but not limited to identification or authentication...</li>
-      <li>You can modify or revoke the authorization granted to Secondary User for UPI Circle.</li>
-      <li>You will have access to and visibility of all the transactions made by Secondary User under the UPI Circle.</li>
-      <li>You represent that you are aware of the identity of the Secondary User and shall comply with the laws of India.</li>
-      <li>You shall be solely responsible for all transactions and actions performed by Secondary User...</li>
-      <li>In the event no transactions are carried through _____ App using UPI Circle... the relevant Secondary User’s authorization may be suspended or terminated.</li>
-    </ul>
-
-    <h3>2. For Secondary User:</h3>
-    <ul>
-      <li>By accepting the request to link your UPI ID to the UPI ID of the Primary User under UPI Circle, you agree to share your details...</li>
-      <li>You agree to share any requested details of your identification with the Primary User...</li>
-      <li>You can de-link your UPI ID with the Primary User at any time.</li>
-    </ul>
-
-    <h3>3. Other Terms:</h3>
-    <ul>
-      <li>At any point in time a maximum limit of ₹15,000 per month is allowed for making transactions through UPI Circle in Full Delegation.</li>
-      <li>At any point in time maximum limit of ₹5,000 is allowed per transaction in Full Delegation.</li>
-      <li>Under Full Delegation, a Secondary User’s UPI ID can be linked for a maximum term of 5 years and a minimum term of 1 month.</li>
+}
