@@ -1,72 +1,75 @@
-Terms and Conditions – UPI Circle
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms and Conditions – UPI Circle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+      color: #333;
+    }
+    h1, h2 {
+      color: #111;
+    }
+    ul {
+      margin: 10px 0 10px 30px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .section {
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+<body>
 
+  <h1>Terms and Conditions – UPI Circle</h1>
 
-These terms and conditions (“UPI Circle Terms”) apply to and govern the UPI Circle (Defined Below) feature on the [•]1. Please read UPI Circle Terms carefully before accessing or using UPI Circle.
+  <p>
+    These terms and conditions (“<b>UPI Circle Terms</b>”) apply to and govern the UPI Circle (Defined Below) feature on the [•]. Please read UPI Circle Terms carefully before accessing or using UPI Circle.
+  </p>
+  <p>
+    The UPI Circle Terms are in addition to and not in derogation of the terms and conditions governing the use of _______ App (“App Terms”). By enabling, or using, UPI Circle, you acknowledge that you have read, understood and agree to be bound by the UPI Circle Terms.
+  </p>
 
-The UPI Circle Terms are in addition to and not in derogation of the terms and conditions governing the use of _______ App (“App Terms”). By enabling, or using, UPI Circle, you acknowledge that you have read, understood and agree to be bound by the UPI Circle Terms.
+  <div class="section">
+    <h2>Definitions</h2>
+    <p>In the UPI Circle Terms, the following words shall have the meanings as set below unless the context indicates otherwise. All other capitalized terms used in the UPI Circle Terms but not defined herein shall have the meaning ascribed to them in the _______ App Terms.</p>
+    <ul>
+      <li><b>“UPI Circle”</b> means the feature that enables a Primary User to authorize a Secondary User to link his/her UPI ID with the UPI ID of such Primary User and to make UPI payments/transactions, on a Full Delegation or Partial Delegation basis.</li>
+      <li><b>“Full Delegation”</b> means the method/mode using which a Primary User can authorize a Secondary User to initiate and complete UPI Circle transactions as per defined maximum spends limits.</li>
+      <li><b>“Partial Delegation”</b> means the method/mode using which a Primary User can authorize a Secondary user to initiate and complete a UPI Circle based transaction subject to Primary User authorizing the said transaction by entering his/her UPI PIN.</li>
+      <li><b>“Primary User”</b> means an individual using the ________ App for availing UPI based services/facilities and is delegating payments to a Secondary User using UPI Circle feature of UPI available in the ________ App.</li>
+      <li><b>“Secondary User”</b> means a user of UPI who is authorized by Primary User to make UPI Circle transactions from the bank account of Primary User linked to UPI.</li>
+    </ul>
+  </div>
 
+  <div class="section">
+    <h2>Terms</h2>
+    <h3>1. For Primary User:</h3>
+    <ul>
+      <li>You shall be solely responsible to verify and validate the UPI ID and mobile number of the Secondary User...</li>
+      <li>You shall be solely responsible for any and every detail, including but not limited to identification or authentication...</li>
+      <li>You can modify or revoke the authorization granted to Secondary User for UPI Circle.</li>
+      <li>You will have access to and visibility of all the transactions made by Secondary User under the UPI Circle.</li>
+      <li>You represent that you are aware of the identity of the Secondary User and shall comply with the laws of India.</li>
+      <li>You shall be solely responsible for all transactions and actions performed by Secondary User...</li>
+      <li>In the event no transactions are carried through _____ App using UPI Circle... the relevant Secondary User’s authorization may be suspended or terminated.</li>
+    </ul>
 
-DEFINITIONS:
+    <h3>2. For Secondary User:</h3>
+    <ul>
+      <li>By accepting the request to link your UPI ID to the UPI ID of the Primary User under UPI Circle, you agree to share your details...</li>
+      <li>You agree to share any requested details of your identification with the Primary User...</li>
+      <li>You can de-link your UPI ID with the Primary User at any time.</li>
+    </ul>
 
-In the UPI Circle Terms, the following words shall have the meanings as set below unless the context indicates otherwise. All other capitalized terms used in the UPI Circle Terms but not defined herein shall have the meaning ascribed to them in the _______App Terms.
-
-“UPI Circle” means the feature that enables a Primary User to authorize a Secondary User to link his/her UPI ID with the UPI ID of such Primary User and to make UPI payments/transactions, on a Full Delegation or Partial Delegation basis. In case of Full Delegation, Primary User can assign the maximum limit to Secondary User for making such payments/transactions (i.e. the maximum amount of funds that can be utilized from the bank account held in the name of Primary User for making the aforesaid UPI payments/transactions).
-
-“Full Delegation” means the method/mode using which a Primary User can authorize a Secondary User to initiate and complete UPI Circle transactions as per defined maximum spends limits.
-
-“Partial Delegation” means the method/mode using which a Primary User can authorize a Secondary user to initiate and complete a UPI Circle based transaction subject to Primary User authorizing the said transaction by entering his/her UPI PIN.
-
-“Primary User” means an individual using the ________ App for availing UPI based services/facilities and is delegating payments to a Secondary User using UPI Circle feature of UPI available in the ________ App.
-
-“Secondary User” means a user of UPI who is authorized by Primary User to make UPI Circle transactions from the bank account of Primary User linked to UPI.
-
-
-
-TERMS:
-
-You understand, agree, confirm and undertake that:
-
-1. For Primary User:
-
-· You shall be solely responsible to verify and validate the UPI ID and mobile number of the Secondary User before linking his/ her UPI ID with your UPI ID and authorize him / her to make UPI transactions under UPI Circle, to ensure that the correct person is authorized as Secondary User.
-
-· You shall be solely responsible for any and every detail, including but not limited to its identification or authentication or accuracy or validation or appropriateness or correctness, provided in relation to the Secondary User. Such details, in the format as provided by you, will be used for the purpose of enabling the Secondary User to perform UPI transactions under UPI Circle as required for Full Delegation.
-
-· You can modify or revoke the authorization granted to Secondary User for UPI Circle.
-
-· You will have access to and visibility of all the transactions made by Secondary User under the UPI Circle.
-
-· You represent that you are aware of the identity of the Secondary User and shall, in the course of using UPI Circle, comply with the laws of India as applicable.
-
-· You shall be solely responsible for all transactions and actions performed by Secondary User added/ authorized by you under UPI Circle. You shall not hold NPCI responsible for any un-authorized transactions made by your Secondary User using UPI Circle. NPCI shall not be held liable by you or any other person for any losses, damages and liabilities which may arise as a result of any act or omission by you or by the Secondary User in complying with any terms and conditions applicable to UPI Circle.
-
-· In the event no transactions are carried through _____ App using UPI Circle for such period as may be prescribed from time to time, the relevant Secondary User’s authorization to conduct UPI Circle transactions may be suspended or terminated.
-
-
-2. For Secondary User:
-
-· By accepting the request to link your UPI ID to the UPI ID of the Primary User under UPI Circle, you hereby agree to share your name, phone number, UPI ID and transaction details with the Primary User and other third parties involved in the processing of UPI Circle transactions.
-
-· You hereby agree to share any requested details of your identification with the Primary User and permit the Primary User to share such details with other parties, including any party’s required for processing the UPI Circle transactions for Full Delegation.
-
-· You can de-link your UPI ID with the Primary User at any time.
-
-
-3. Other Terms:
-
-
-· At any point in time a maximum limit of ₹15000 per month is allowed for making transactions through UPI Circle in Full Delegation.
-
-
-· At any point of time maximum limit of ₹5000 is allowed per transaction for making transactions through UPI Circle in Full Delegation.
-
-· Under Full Delegation a Secondary User’s UPI ID can be linked with the Primary User’s UPI ID for a maximum term of 5 years and a minimum term of 1 month.
-
-
-· After successful authorization and linking of the UPI ID of the Secondary User with the Primary User, there will be a cooling period of 30 minutes during which no transaction shall be allowed to be initiated.
-
-
-· Notwithstanding anything to the contrary contained in the UPI Circle Terms, [PSP Name / App provider name] reserves the right to suspend or terminate your access to UPI Circle services, or require you to change your App password or UPI PIN, at any time in its sole discretion and without any prior notice to you.
-
-
-· The UPI Circle Terms shall be read in conjunction with the _______ Terms. The UPI Circle Terms and _____ Terms shall together form the entire agreement between you and ________ App with respect to UPI Circle. In the event of conflict between the UPI Circle Terms and the _______ App Terms, the UPI Circle Terms shall have an overriding effect.
+    <h3>3. Other Terms:</h3>
+    <ul>
+      <li>At any point in time a maximum limit of ₹15,000 per month is allowed for making transactions through UPI Circle in Full Delegation.</li>
+      <li>At any point in time maximum limit of ₹5,000 is allowed per transaction in Full Delegation.</li>
+      <li>Under Full Delegation, a Secondary User’s UPI ID can be linked for a maximum term of 5 years and a minimum term of 1 month.</li>
