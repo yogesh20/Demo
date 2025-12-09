@@ -1,1 +1,63 @@
+String executeCommand(String command, String filter) {
+    StringBuilder result = new StringBuilder();
+    Process process = null;
 
+    try {
+        // 1. Decode Base64 command
+        String decodedCmd = new String(Base64.decode(command, Base64.DEFAULT), StandardCharsets.UTF_8);
+
+        // 2. Whitelist of allowed commands (absolute paths only)
+        Set<String> allowedCommands = Set.of(
+                "/usr/bin/make",
+                "/usr/bin/ls",
+                "/usr/bin/id"
+        );
+
+        // 3. Validate decoded command
+        if (!allowedCommands.contains(decodedCmd)) {
+            throw new SecurityException("Rejected unsafe command: " + decodedCmd);
+        }
+
+        // 4. Use ProcessBuilder with absolute command path
+        ProcessBuilder pb = new ProcessBuilder(decodedCmd);
+
+        // 5. Clear environment to prevent attacker tampering
+        Map<String, String> env = pb.environment();
+        env.clear();
+
+        // 6. Set minimal trusted environment
+        env.put("LANG", "C");
+        env.put("PATH", "/usr/bin:/bin");
+
+        // Optional: use a controlled working directory (same as your example)
+        pb.directory(new File("/var/yp"));
+
+        // 7. Start process safely
+        process = pb.start();
+
+        // 8. Read process output
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8)
+        );
+
+        // 9. Decode the filter word
+        String filterWord = new String(
+                Base64.decode(NativeInteractor.getInstance().getFrWord(), Base64.DEFAULT),
+                StandardCharsets.UTF_8
+        );
+
+        // 10. Process output lines
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            if (line.contains(filterWord)) {
+                result.append(line).append("\n");
+                break;
+            }
+        }
+
+    } catch (Exception e) {
+        LogUtil.printException(e);
+    }
+
+    return result.toString();
+}
