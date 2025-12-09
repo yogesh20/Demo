@@ -1,63 +1,72 @@
-String executeCommand(String command, String filter) {
-    StringBuilder result = new StringBuilder();
+public String executor(String command) {
+    byte[] decoded = Base64.decode(command, Base64.DEFAULT);
+    command = new String(decoded, StandardCharsets.UTF_8);
+
+    LogUtil.info(TAG, "Post Decoded Command : " + command);
+
+    StringBuilder output = new StringBuilder();
     Process process = null;
 
     try {
-        // 1. Decode Base64 command
-        String decodedCmd = new String(Base64.decode(command, Base64.DEFAULT), StandardCharsets.UTF_8);
-
-        // 2. Whitelist of allowed commands (absolute paths only)
+        // 1. Allowed absolute commands
         Set<String> allowedCommands = Set.of(
                 "/usr/bin/make",
                 "/usr/bin/ls",
                 "/usr/bin/id"
         );
 
-        // 3. Validate decoded command
-        if (!allowedCommands.contains(decodedCmd)) {
-            throw new SecurityException("Rejected unsafe command: " + decodedCmd);
+        // 2. Validate decoded command
+        if (!allowedCommands.contains(command)) {
+            throw new SecurityException("Rejected unsafe command: " + command);
         }
 
-        // 4. Use ProcessBuilder with absolute command path
-        ProcessBuilder pb = new ProcessBuilder(decodedCmd);
+        // 3. Create safe ProcessBuilder
+        ProcessBuilder pb = new ProcessBuilder(command);
 
-        // 5. Clear environment to prevent attacker tampering
+        // 4. Clear environment to prevent attacker injection
         Map<String, String> env = pb.environment();
         env.clear();
-
-        // 6. Set minimal trusted environment
         env.put("LANG", "C");
         env.put("PATH", "/usr/bin:/bin");
 
-        // Optional: use a controlled working directory (same as your example)
+        // Optional: controlled working directory
         pb.directory(new File("/var/yp"));
 
-        // 7. Start process safely
+        // 5. Start the secure process
         process = pb.start();
 
-        // 8. Read process output
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8)
-        );
+        // 6. Wait for completion
+        process.waitFor();
 
-        // 9. Decode the filter word
-        String filterWord = new String(
-                Base64.decode(NativeInteractor.getInstance().getFrWord(), Base64.DEFAULT),
-                StandardCharsets.UTF_8
-        );
+        // 7. Read output
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
 
-        // 10. Process output lines
         String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            if (line.contains(filterWord)) {
-                result.append(line).append("\n");
-                break;
-            }
+        while ((line = reader.readLine()) != null) {
+            output.append(line).append("\n");
+        }
+
+    } catch (IOException e) {
+
+        LogUtil.info(TAG, "Exception : " + e.getMessage());
+        LogUtil.printException(e);
+
+        // Preserve your fallback behavior
+        if (e.getMessage() != null && e.getMessage().contains("Error running exec()")) {
+            String mgskStr = new String(Base64.decode(
+                    NativeInteractor.getInstance().getSbinInCapsBase64(),
+                    Base64.DEFAULT
+            ), StandardCharsets.UTF_8);
+            return mgskStr;
         }
 
     } catch (Exception e) {
         LogUtil.printException(e);
     }
 
-    return result.toString();
+    String response = output.toString();
+    LogUtil.info(TAG, "Response  : " + response);
+
+    return response;
 }
