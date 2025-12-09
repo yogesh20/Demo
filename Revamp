@@ -1,21 +1,50 @@
-public Bitmap getBitmapFromURL(String strURL) {
-    HttpURLConnection connection = null;
-    try {
-        URL url = new URL(strURL);
-        connection = (HttpURLConnection) url.openConnection();
-        connection.setDoInput(true);
-        connection.connect();
+public void shareScreenshot(View view) {
+    Bitmap bitmap = loadBitmapFromView(view);
+    if (bitmap == null) {
+        Log.e("Screenshot", "Bitmap is null");
+        return;
+    }
 
-        try (InputStream input = connection.getInputStream()) {
-            return BitmapFactory.decodeStream(input);
+    Context ctx = view.getContext();
+    File cachePath = new File(ctx.getCacheDir(), "images");
+
+    try {
+        // Ensure directory exists
+        if (!cachePath.exists()) {
+            boolean created = cachePath.mkdirs();
+            if (!created) {
+                throw new IOException("Failed to create cache directory: " + cachePath.getAbsolutePath());
+            }
+        }
+
+        File imageFile = new File(cachePath, "image.png");
+
+        // Use try-with-resources for safe stream closing
+        try (FileOutputStream stream = new FileOutputStream(imageFile)) {
+            boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            if (!success) {
+                throw new IOException("Bitmap compression failed");
+            }
+        }
+
+        Uri contentUri = FileProvider.getUriForFile(
+                ctx,
+                BuildConfig.APPLICATION_ID,
+                imageFile
+        );
+
+        if (contentUri != null) {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            shareIntent.setType(ctx.getContentResolver().getType(contentUri));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+
+            ctx.startActivity(Intent.createChooser(shareIntent, "Choose an app"));
+            homeBtn.setVisibility(View.VISIBLE);
+            share_icon.setVisibility(View.VISIBLE);
         }
 
     } catch (IOException e) {
         LogUtil.printException(e);
-        return null;
-    } finally {
-        if (connection != null) {
-            connection.disconnect(); // Release HTTP connection
-        }
     }
 }
