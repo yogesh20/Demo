@@ -1,8 +1,21 @@
-String query = bankHint.toLowerCase(Locale.ROOT);
+public Bitmap getBitmapFromURL(String strURL) {
+    HttpURLConnection connection = null;
+    try {
+        URL url = new URL(strURL);
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setDoInput(true);
+        connection.connect();
 
-for (BankDetail bankDetail : bankDataList) {
-    if (bankDetail.bankName != null &&
-        bankDetail.bankName.toLowerCase(Locale.ROOT).startsWith(query)) {
-        matchedBankDetails.add(bankDetail);
+        try (InputStream input = connection.getInputStream()) {
+            return BitmapFactory.decodeStream(input);
+        }
+
+    } catch (IOException e) {
+        LogUtil.printException(e);
+        return null;
+    } finally {
+        if (connection != null) {
+            connection.disconnect(); // Release HTTP connection
+        }
     }
 }
