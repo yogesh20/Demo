@@ -1,9 +1,17 @@
-    public static String generatePlayIntegrityNonce() {
-        int length = 50;
-        String nonce = "";
-        String allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for (int i = 0; i < length; i++) {
-            nonce = nonce.concat(String.valueOf(allowed.charAt((int) Math.floor(Math.random() * allowed.length()))));
-        }
-        return nonce;
+import java.security.SecureRandom;
+
+public static String generatePlayIntegrityNonce() {
+    int length = 50;
+    final String allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    SecureRandom secureRandom = new SecureRandom(); // cryptographically strong PRNG
+
+    StringBuilder nonce = new StringBuilder(length);
+
+    for (int i = 0; i < length; i++) {
+        int index = secureRandom.nextInt(allowed.length());
+        nonce.append(allowed.charAt(index));
     }
+
+    return nonce.toString();
+}
