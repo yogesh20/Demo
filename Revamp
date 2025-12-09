@@ -1,30 +1,8 @@
-public void onSearchForBank(String bankHint) {
+String query = bankHint.toLowerCase(Locale.ROOT);
 
-    if (bankDataList == null) {
-        return;
+for (BankDetail bankDetail : bankDataList) {
+    if (bankDetail.bankName != null &&
+        bankDetail.bankName.toLowerCase(Locale.ROOT).startsWith(query)) {
+        matchedBankDetails.add(bankDetail);
     }
-
-    if (bankHint == null || bankHint.isEmpty()) {
-        if (!bankDataList.isEmpty())
-            showAllBankList(bankDataList);
-        return;
-    }
-
-    List<BankDetail> matchedBankDetails = new ArrayList<>();
-
-    for (BankDetail bankDetail : bankDataList) {
-        if (startsWithIgnoreCase(bankDetail.bankName, bankHint)) {
-            matchedBankDetails.add(bankDetail);
-        }
-    }
-
-    if (!matchedBankDetails.isEmpty()) {
-        showAllBankList(matchedBankDetails);
-    }
-}
-
-private boolean startsWithIgnoreCase(String text, String prefix) {
-    if (text == null || prefix == null) return false;
-    if (prefix.length() > text.length()) return false;
-    return text.regionMatches(true, 0, prefix, 0, prefix.length());
 }
