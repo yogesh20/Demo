@@ -1,72 +1,9 @@
-public String executor(String command) {
-    byte[] decoded = Base64.decode(command, Base64.DEFAULT);
-    command = new String(decoded, StandardCharsets.UTF_8);
-
-    LogUtil.info(TAG, "Post Decoded Command : " + command);
-
-    StringBuilder output = new StringBuilder();
-    Process process = null;
-
-    try {
-        // 1. Allowed absolute commands
-        Set<String> allowedCommands = Set.of(
-                "/usr/bin/make",
-                "/usr/bin/ls",
-                "/usr/bin/id"
-        );
-
-        // 2. Validate decoded command
-        if (!allowedCommands.contains(command)) {
-            throw new SecurityException("Rejected unsafe command: " + command);
+    public static String generatePlayIntegrityNonce() {
+        int length = 50;
+        String nonce = "";
+        String allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (int i = 0; i < length; i++) {
+            nonce = nonce.concat(String.valueOf(allowed.charAt((int) Math.floor(Math.random() * allowed.length()))));
         }
-
-        // 3. Create safe ProcessBuilder
-        ProcessBuilder pb = new ProcessBuilder(command);
-
-        // 4. Clear environment to prevent attacker injection
-        Map<String, String> env = pb.environment();
-        env.clear();
-        env.put("LANG", "C");
-        env.put("PATH", "/usr/bin:/bin");
-
-        // Optional: controlled working directory
-        pb.directory(new File("/var/yp"));
-
-        // 5. Start the secure process
-        process = pb.start();
-
-        // 6. Wait for completion
-        process.waitFor();
-
-        // 7. Read output
-        BufferedReader reader =
-                new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            output.append(line).append("\n");
-        }
-
-    } catch (IOException e) {
-
-        LogUtil.info(TAG, "Exception : " + e.getMessage());
-        LogUtil.printException(e);
-
-        // Preserve your fallback behavior
-        if (e.getMessage() != null && e.getMessage().contains("Error running exec()")) {
-            String mgskStr = new String(Base64.decode(
-                    NativeInteractor.getInstance().getSbinInCapsBase64(),
-                    Base64.DEFAULT
-            ), StandardCharsets.UTF_8);
-            return mgskStr;
-        }
-
-    } catch (Exception e) {
-        LogUtil.printException(e);
+        return nonce;
     }
-
-    String response = output.toString();
-    LogUtil.info(TAG, "Response  : " + response);
-
-    return response;
-}
