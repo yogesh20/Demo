@@ -1,17 +1,30 @@
-import java.security.SecureRandom;
+public void onSearchForBank(String bankHint) {
 
-public static String generatePlayIntegrityNonce() {
-    int length = 50;
-    final String allowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    SecureRandom secureRandom = new SecureRandom(); // cryptographically strong PRNG
-
-    StringBuilder nonce = new StringBuilder(length);
-
-    for (int i = 0; i < length; i++) {
-        int index = secureRandom.nextInt(allowed.length());
-        nonce.append(allowed.charAt(index));
+    if (bankDataList == null) {
+        return;
     }
 
-    return nonce.toString();
+    if (bankHint == null || bankHint.isEmpty()) {
+        if (!bankDataList.isEmpty())
+            showAllBankList(bankDataList);
+        return;
+    }
+
+    List<BankDetail> matchedBankDetails = new ArrayList<>();
+
+    for (BankDetail bankDetail : bankDataList) {
+        if (startsWithIgnoreCase(bankDetail.bankName, bankHint)) {
+            matchedBankDetails.add(bankDetail);
+        }
+    }
+
+    if (!matchedBankDetails.isEmpty()) {
+        showAllBankList(matchedBankDetails);
+    }
+}
+
+private boolean startsWithIgnoreCase(String text, String prefix) {
+    if (text == null || prefix == null) return false;
+    if (prefix.length() > text.length()) return false;
+    return text.regionMatches(true, 0, prefix, 0, prefix.length());
 }
