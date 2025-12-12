@@ -1,3 +1,14 @@
-public static synchronized String getCrntDate() {
-    return Util.simpleDateFormat.format(new Date());
+String imagesDir = Environment
+        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES 
+        + File.separator + "BHIM SBI Pay")
+        .toString();
+
+File file = new File(imagesDir, fileName + ".jpg");
+
+try (FileOutputStream fos = new FileOutputStream(file)) {
+    // write your bitmap or data here
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+    fos.flush();
+} catch (IOException e) {
+    LogUtil.printException(e);
 }
