@@ -1,0 +1,31 @@
+package com.vTransact.upi.config;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+@Configuration
+public class DataSourceConfig {
+
+    @Bean(name = "dataSource")
+    public DataSource dataSource() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("oracle.jdbc.OracleDriver");
+        ds.setUrl("COPY_THE_URL_FROM_OLD_dataSource");
+        ds.setUsername("COPY_THE_USERNAME_FROM_OLD_dataSource");
+        ds.setPassword("COPY_THE_PASSWORD_FROM_OLD_dataSource");
+        return ds;
+    }
+
+    @Bean(name = "dataSourceMis")
+    public DataSource dataSourceMis() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("oracle.jdbc.OracleDriver");
+        ds.setUrl("COPY_THE_URL_FROM_OLD_dataSourceMis");
+        ds.setUsername("COPY_THE_USERNAME_FROM_OLD_dataSourceMis");
+        ds.setPassword("COPY_THE_PASSWORD_FROM_OLD_dataSourceMis");
+        return ds;
+    }
+}
