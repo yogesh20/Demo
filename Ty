@@ -1,0 +1,4 @@
+# Private keys / certificates
+**/private_pkcs8.pem
+**/*.p12
+**/*.pfx
