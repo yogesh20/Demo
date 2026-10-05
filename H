@@ -1,0 +1,3 @@
+SELECT authorized_grant_types, COUNT(*) AS client_count
+FROM oauth_client_details
+GROUP BY authorized_grant_types;
