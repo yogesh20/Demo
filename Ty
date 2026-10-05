@@ -1,0 +1,10 @@
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // migrate old spring-security.xml rules here
+        return http.build();
+    }
+}
