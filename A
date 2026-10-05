@@ -1,0 +1,8 @@
+SELECT
+    client_id,
+    LENGTH(client_secret) AS secret_length,
+    authorized_grant_types,
+    authorities,
+    access_token_validity,
+    refresh_token_validity
+FROM oauth_client_details;
