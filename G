@@ -1,0 +1,11 @@
+SELECT
+    CASE
+        WHEN REGEXP_LIKE(client_secret, '^[0-9A-Fa-f]{32}$')
+        THEN '32_HEX'
+        ELSE 'OTHER'
+    END AS secret_format
+FROM (
+    SELECT client_secret
+    FROM oauth_client_details
+    WHERE ROWNUM = 1
+);
