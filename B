@@ -1,0 +1,10 @@
+SELECT
+    COUNT(*) AS total_clients,
+    SUM(
+        CASE
+            WHEN REGEXP_LIKE(client_secret, '^[0-9A-Fa-f]{32}$')
+            THEN 1
+            ELSE 0
+        END
+    ) AS hex_32_secrets
+FROM oauth_client_details;
