@@ -1,0 +1,6 @@
+SELECT
+    LENGTH(client_secret) AS secret_length,
+    SUBSTR(client_secret, 1, 1) AS first_char,
+    SUBSTR(client_secret, -1, 1) AS last_char
+FROM oauth_client_details
+WHERE ROWNUM = 1;
