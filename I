@@ -1,0 +1,229 @@
+package com.vTransact.upi.config;
+
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.UUID;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
+@Configuration
+public class JwkConfig {
+
+    @Bean
+    public KeyPair keyPair() {
+
+        try {
+            KeyPairGenerator keyPairGenerator =
+                    KeyPairGenerator.getInstance("RSA");
+
+            keyPairGenerator.initialize(2048);
+
+            return keyPairGenerator.generateKeyPair();
+
+        } catch (Exception ex) {
+
+            throw new IllegalStateException(
+                    "Failed to generate RSA key pair", ex);
+        }
+    }
+
+    @Bean
+    public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
+
+        RSAPublicKey publicKey =
+                (RSAPublicKey) keyPair.getPublic();
+
+        RSAPrivateKey privateKey =
+                (RSAPrivateKey) keyPair.getPrivate();
+
+        RSAKey rsaKey =
+                new RSAKey.Builder(publicKey)
+                        .privateKey(privateKey)
+                        .keyID(UUID.randomUUID().toString())
+                        .build();
+
+        JWKSet jwkSet = new JWKSet(rsaKey);
+
+        return (jwkSelector, securityContext) ->
+                jwkSelector.select(jwkSet);
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder(KeyPair keyPair) {
+
+        return NimbusJwtDecoder
+                .withPublicKey(
+                        (RSAPublicKey) keyPair.getPublic())
+                .build();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.vTransact.upi.config;
+
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.UUID;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
+@Configuration
+public class JwkConfig {
+
+    @Bean
+    public KeyPair keyPair() {
+
+        try {
+            KeyPairGenerator keyPairGenerator =
+                    KeyPairGenerator.getInstance("RSA");
+
+            keyPairGenerator.initialize(2048);
+
+            return keyPairGenerator.generateKeyPair();
+
+        } catch (Exception ex) {
+
+            throw new IllegalStateException(
+                    "Failed to generate RSA key pair", ex);
+        }
+    }
+
+    @Bean
+    public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
+
+        RSAPublicKey publicKey =
+                (RSAPublicKey) keyPair.getPublic();
+
+        RSAPrivateKey privateKey =
+                (RSAPrivateKey) keyPair.getPrivate();
+
+        RSAKey rsaKey =
+                new RSAKey.Builder(publicKey)
+                        .privateKey(privateKey)
+                        .keyID(UUID.randomUUID().toString())
+                        .build();
+
+        JWKSet jwkSet = new JWKSet(rsaKey);
+
+        return (jwkSelector, securityContext) ->
+                jwkSelector.select(jwkSet);
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder(KeyPair keyPair) {
+
+        return NimbusJwtDecoder
+                .withPublicKey(
+                        (RSAPublicKey) keyPair.getPublic())
+                .build();
+    }
+}
+
+
+
+
+
+
+
+package com.vTransact.upi.config;
+
+import com.vTransact.upi.filter.APIAuthenticationProvider;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    private final APIAuthenticationProvider apiAuthenticationProvider;
+
+    public SecurityConfig(
+            APIAuthenticationProvider apiAuthenticationProvider) {
+
+        this.apiAuthenticationProvider =
+                apiAuthenticationProvider;
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http) throws Exception {
+
+        http
+            .authenticationProvider(apiAuthenticationProvider)
+
+            .csrf(csrf -> csrf.disable())
+
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/oauth/token").permitAll()
+                .requestMatchers("/upi/api/**").hasRole("PSP")
+                .requestMatchers("/upi/web/v2.0/**").hasRole("MER")
+                .anyRequest().authenticated()
+            )
+
+            .oauth2ResourceServer(oauth2 ->
+                oauth2.jwt()
+            );
+
+        return http.build();
+    }
+}
+
+
+
+
+
+
