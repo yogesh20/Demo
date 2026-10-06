@@ -1,0 +1,17 @@
+
+
+import jakarta.annotation.PostConstruct;
+
+@PostConstruct
+public void testClientLookup() {
+    String clientId = jdbcTemplate.queryForObject(
+            "SELECT client_id FROM oauth_client_details WHERE ROWNUM = 1",
+            String.class);
+
+    System.out.println("Legacy OAuth client found: " + clientId);
+
+    RegisteredClient client = findByClientId(clientId);
+
+    System.out.println("RegisteredClient loaded: "
+            + (client != null));
+}
