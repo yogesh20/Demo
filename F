@@ -1,0 +1,56 @@
+package com.vTransact.upi.filter;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
+
+public class BoundedHttpServletRequest extends HttpServletRequestWrapper {
+
+    private final long maxPayloadSize;
+
+    private ServletInputStream cachedInputStream;
+    private BufferedReader cachedReader;
+
+    public BoundedHttpServletRequest(
+            HttpServletRequest request,
+            long maxPayloadSize) {
+
+        super(request);
+        this.maxPayloadSize = maxPayloadSize;
+    }
+
+    @Override
+    public ServletInputStream getInputStream() throws IOException {
+
+        if (cachedInputStream == null) {
+            cachedInputStream = new BoundedServletInputStream(
+                    super.getInputStream(),
+                    maxPayloadSize
+            );
+        }
+
+        return cachedInputStream;
+    }
+
+    @Override
+    public BufferedReader getReader() throws IOException {
+
+        if (cachedReader == null) {
+
+            String enc = getCharacterEncoding();
+
+            InputStreamReader isr =
+                    (enc != null)
+                            ? new InputStreamReader(getInputStream(), enc)
+                            : new InputStreamReader(getInputStream());
+
+            cachedReader = new BufferedReader(isr);
+        }
+
+        return cachedReader;
+    }
+}
