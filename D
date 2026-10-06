@@ -1,0 +1,21 @@
+@Override
+public RegisteredClient findByClientId(String clientId) {
+
+    String sql = "SELECT client_id FROM oauth_client_details WHERE client_id = ?";
+
+    String dbClientId = jdbcTemplate.queryForObject(
+            sql,
+            String.class,
+            clientId
+    );
+
+    if (dbClientId == null) {
+        return null;
+    }
+
+    System.out.println("Client ID loaded successfully: " + dbClientId);
+
+    return RegisteredClient.withId(dbClientId)
+            .clientId(dbClientId)
+            .build();
+}
