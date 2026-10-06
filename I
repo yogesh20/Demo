@@ -1,9 +1,0 @@
-SELECT COUNT(*) AS total_rows
-FROM oauth_client_details;
-
-SELECT
-    MIN(access_token_validity) AS min_access_validity,
-    MAX(access_token_validity) AS max_access_validity,
-    MIN(refresh_token_validity) AS min_refresh_validity,
-    MAX(refresh_token_validity) AS max_refresh_validity
-FROM oauth_client_details;
