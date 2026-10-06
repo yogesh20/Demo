@@ -1,6 +1,0 @@
-private final LegacyRegisteredClientRepository registeredClientRepository;
-
-public AuthorizationServerConfig(
-        LegacyRegisteredClientRepository registeredClientRepository) {
-    this.registeredClientRepository = registeredClientRepository;
-}
