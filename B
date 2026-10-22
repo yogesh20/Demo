@@ -1,2 +1,1 @@
-cd /u01/app/Domains_15c/portal/servers/Portal_ms1/logs
-grep -i -m 10 "WebLogic Server" Portal_ms1.log
+grep -i -m 10 "weblogic version\|WebLogic Server Version" Portal_ms1.log
