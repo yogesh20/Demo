@@ -1,23 +1,17 @@
-package com.vTransact.upi.service;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.PropertySource;
-
-@PropertySource("classpath:urls.properties")
-@SpringBootApplication(scanBasePackages = "com.vTransact.upi")
-public class TXNAuthApiBootApplication
-        extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(
-            SpringApplicationBuilder application) {
-        return application.sources(TXNAuthApiBootApplication.class);
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(TXNAuthApiBootApplication.class, args);
-    }
-}
+No. | URL / Domain | Description / Purpose
+1 | repo.maven.apache.org | Downloads Java and Maven dependencies from Maven Central.
+2 | repo1.maven.org | Alternative Maven Central endpoint for dependencies.
+3 | dl.google.com | Downloads Android and Google dependencies, including build plugins.
+4 | maven.google.com | Google Maven repository for Android and Google libraries.
+5 | services.gradle.org | Gradle services and distribution redirects.
+6 | services.gradle.org/distributions/ | Gradle distribution download path.
+7 | downloads.gradle.org | Hosts Gradle distribution ZIP files.
+8 | plugins.gradle.org | Gradle Plugin Portal for resolving build plugins.
+9 | plugins-artifacts.gradle.org | Hosts Gradle plugin artifacts.
+10 | github.com | Source code repositories, releases, and project resources.
+11 | objects.githubusercontent.com | Hosts downloadable objects and GitHub assets.
+12 | release-assets.githubusercontent.com | Hosts GitHub release files and downloadable assets.
+13 | developer.android.com | Android developer documentation and resources.
+14 | resources.jetbrains.com | JetBrains resources and development tools.
+15 | downloads.jetbrains.com | Downloads JetBrains IDEs and related tools, if required.
+16 | YOUR_JFROG_DOMAIN | Internal artifact repository, if the project uses JFrog Artifactory.
