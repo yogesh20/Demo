@@ -1,19 +1,8 @@
-Hi Team,
+for %f in ("%USERPROFILE%\.m2\repository\org\springframework\spring-web\6.2.19\spring-web-6.2.19.jar" "%USERPROFILE%\.m2\repository\org\springframework\spring-webmvc\6.2.19\spring-webmvc-6.2.19.jar" "%USERPROFILE%\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.55\tomcat-embed-core-10.1.55.jar") do @echo ==== %f ==== & jar tf "%f" | findstr "META-INF/web-fragment.xml"
 
-We need the following URLs to be whitelisted in the corporate proxy/firewall to ensure successful Android Studio project sync and Gradle dependency downloads.
 
-Requirements:
 
-1. URL Whitelisting: Allow access to all the listed domains, including any redirect URLs required to download Gradle distributions, Android SDK packages, Maven dependencies, and Gradle plugins.
 
-2. File Download Limit: Please allow downloads of files larger than 100 MB without any size restrictions or proxy interruptions, as Gradle distributions, Android SDK packages, and other build dependencies may require large downloads.
 
-3. SSL Bypass: Please configure an SSL inspection bypass for the listed domains, subject to the organization's security policy, to prevent SSL certificate validation errors during Android Studio Gradle Sync and dependency downloads.
 
-4. Download and Redirect Access: Ensure that redirected download URLs are also permitted and that large file downloads do not fail due to proxy timeout, file-size limits, or connection restrictions.
-
-5. Validation: After applying these changes, we will perform Android Studio Gradle Sync and verify that all required dependencies and build tools download successfully.
-
-Please review and apply the necessary proxy/firewall configurations and confirm once completed.
-
-Thank you.
+for /r "%USERPROFILE%\.m2\repository" %f in (*.jar) do @jar tf "%f" 2>nul | findstr /x "META-INF/web-fragment.xml" >nul && echo %f
