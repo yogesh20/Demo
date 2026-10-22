@@ -1,1 +1,0 @@
-for /r "%USERPROFILE%\.m2\repository" %f in (*.jar) do @jar tf "%f" 2>nul | findstr /i /x "META-INF/web-fragment.xml" >nul && (echo %f & jar xf "%f" META-INF/web-fragment.xml 2>nul & findstr /i "version=\"6.0\"" META-INF\web-fragment.xml & del META-INF\web-fragment.xml 2>nul)
