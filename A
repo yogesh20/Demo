@@ -1,5 +1,1 @@
-jar xf "%USERPROFILE%\.m2\repository\org\springframework\spring-web\6.2.19\spring-web-6.2.19.jar" META-INF/web-fragment.xml
-
-
-
-type META-INF\web-fragment.xml
+for /r "%USERPROFILE%\.m2\repository" %f in (*.jar) do @jar tf "%f" 2>nul | findstr /i /x "META-INF/web-fragment.xml" >nul && (echo %f & jar xf "%f" META-INF/web-fragment.xml 2>nul & findstr /i "version=\"6.0\"" META-INF\web-fragment.xml & del META-INF\web-fragment.xml 2>nul)
