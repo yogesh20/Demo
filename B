@@ -1,1 +1,1 @@
-for %f in (WEB-INF\lib\*.jar) do @jar tf "%f" 2>nul | findstr /i /x "META-INF/web-fragment.xml" >nul && (echo ==== %f ==== & jar xf "%f" META-INF/web-fragment.xml & findstr /i "version=" META-INF/web-fragment.xml & del META-INF\web-fragment.xml)
+for %f in (WEB-INF\lib\*.jar) do @jar tf "%f" 2>nul | findstr /i /x "META-INF/web-fragment.xml" >nul && (echo ==== %f ==== & jar xf "%f" META-INF/web-fragment.xml & if exist META-INF\web-fragment.xml (findstr /i "version=" META-INF\web-fragment.xml & del META-INF\web-fragment.xml))
