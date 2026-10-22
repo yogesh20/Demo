@@ -1,1 +1,2 @@
-for %f in (WEB-INF\lib\*.jar WEB-INF\lib-provided\*.jar) do @jar tf "%f" 2>nul | findstr /i /x "META-INF/web-fragment.xml" >nul && (echo ==== %f ==== & jar xf "%f" META-INF/web-fragment.xml & if exist META-INF\web-fragment.xml (findstr /i "version=" META-INF\web-fragment.xml & del META-INF\web-fragment.xml))
+cd /u01/app/Domains_15c/portal/servers/Portal_ms1/logs
+grep -i -m 10 "WebLogic Server" Portal_ms1.log
