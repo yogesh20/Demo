@@ -1,10 +1,23 @@
-SELECT
-    TXNID,
-    PRACCNO,
-    CRTDATE,
-    DRCREFLAG
-FROM VTUTICCWNTNREQ
-WHERE PRACCNO = 'F93A13E3C659ACFB1C22C3F6E7F07481'
-  AND CRTDATE >= DATE '2025-09-12'
-  AND CRTDATE <  DATE '2025-09-13'
-  AND DRCREFLAG = 'D';
+package com.vTransact.upi.service;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.PropertySource;
+
+@PropertySource("classpath:urls.properties")
+@SpringBootApplication(scanBasePackages = "com.vTransact.upi")
+public class TXNAuthApiBootApplication
+        extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(
+            SpringApplicationBuilder application) {
+        return application.sources(TXNAuthApiBootApplication.class);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(TXNAuthApiBootApplication.class, args);
+    }
+}
