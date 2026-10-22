@@ -1,1 +1,1 @@
-jar tf target\TXNAuthApiBoot-1.0.war | findstr /i "tomcat-embed"
+jar tf target\TXNAuthApiBoot-1.0.war | findstr /i "WEB-INF/lib/.*tomcat-embed"
