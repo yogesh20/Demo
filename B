@@ -1,7 +1,1 @@
-mkdir C:\Temp\check-war
-cd /d C:\Temp\check-war
-jar xf D:\portal\TxnAuthApi_with_spring_boot_workspace\TXNAuthApiBoot\target\TXNAuthApiBoot-1.0.war
-
-
-
-for %f in (WEB-INF\lib\*.jar WEB-INF\lib-provided\*.jar) do @jar tf "%f" 2>nul | findstr /i /x "META-INF/web-fragment.xml" >nul && (echo ==== %f ==== & jar xf "%f" META-INF/web-fragment.xml 2>nul & if exist META-INF\web-fragment.xml (findstr /i "version=" META-INF\web-fragment.xml & del META-INF\web-fragment.xml))
+for %f in (WEB-INF\lib\*.jar) do @jar tf "%f" 2>nul | findstr /i /x "META-INF/web-fragment.xml" >nul && (echo ==== %f ==== & jar xf "%f" META-INF/web-fragment.xml & findstr /i "version=" META-INF/web-fragment.xml & del META-INF\web-fragment.xml)
