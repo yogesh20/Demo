@@ -1,1 +1,1 @@
-mvn dependency:tree -Dincludes=org.slf4j:slf4j-reload4j
+cd /d D:\portal\TxnAuthApi_with_spring_boot_workspace\TXNAuthApiBoot
